@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "89841877130",
+    "project_id": "mfa-gamification-prototype",
+    "storage_bucket": "mfa-gamification-prototype.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89841877130:android:fbdbf38633778849a62d73",
+        "android_client_info": {
+          "package_name": "com.redpanda.mfa_gamification"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0BksyDfBTNbIHUyMObOk612Qn1Qfl9d4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
