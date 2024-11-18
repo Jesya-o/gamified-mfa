@@ -5,8 +5,14 @@ class VerificationScreen extends StatelessWidget {
   final int points;
   final int level;
   final Function(int, int) onUpdate;
+  final String requestDetail;
 
-  VerificationScreen({required this.points, required this.level, required this.onUpdate});
+  const VerificationScreen({super.key,
+    required this.points,
+    required this.level,
+    required this.onUpdate,
+    required this.requestDetail
+  });
 
   void _verifyRequest(BuildContext context) {
     // Simulate verification logic

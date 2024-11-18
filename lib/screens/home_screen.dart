@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'verification_screen.dart';
@@ -16,6 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+    _requestPermissions();
+
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
         _navigateToVerificationScreen(message);
@@ -29,6 +33,18 @@ class _HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _navigateToVerificationScreen(message);
     });
+  }
+
+  void _requestPermissions() async {
+    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    if (kDebugMode) {
+      print('User granted permission: ${settings.authorizationStatus}');
+    }
   }
 
   void _navigateToVerificationScreen(RemoteMessage message) {
