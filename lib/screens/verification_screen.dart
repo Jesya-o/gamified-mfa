@@ -24,24 +24,29 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   final _formKey = GlobalKey<FormState>();
   String _enteredCode = '';
+  String _errorMessage = '';
 
   void _verifyRequest() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      bool isValid = _enteredCode == widget.verificationCode;
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CodeInputScreen(
-            isValidRequest: isValid,
-            points: widget.points,
-            level: widget.level,
-            onUpdate: widget.onUpdate,
+      if (_enteredCode == widget.verificationCode) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CodeInputScreen(
+              isValidRequest: true,
+              points: widget.points,
+              level: widget.level,
+              onUpdate: widget.onUpdate,
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        setState(() {
+          _errorMessage = 'Incorrect verification code. Authentication aborted.';
+        });
+      }
     }
   }
 
@@ -56,6 +61,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Authentication Request Details:',
@@ -70,6 +76,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Verification Code',
+                  errorText: _errorMessage.isNotEmpty ? _errorMessage : null,
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
