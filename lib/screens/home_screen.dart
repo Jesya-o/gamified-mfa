@@ -48,6 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _navigateToVerificationScreen(RemoteMessage message) {
+    final verificationCode = message.data['verificationCode'] ?? ''; // Extract the verification code
+    final requestDetail = message.data['requestDetail'] ?? 'Unknown request'; // Extract request details
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -55,7 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
           points: points,
           level: level,
           onUpdate: _updateGamification,
-          requestDetail: message.data['requestDetail'] ?? 'Unknown request',
+          requestDetail: requestDetail,
+          verificationCode: verificationCode, // Pass verification code
         ),
       ),
     );
