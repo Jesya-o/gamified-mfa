@@ -4,7 +4,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'verification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String? authMessage;
+
+  const HomeScreen({super.key, this.authMessage});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -13,12 +15,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int points = 0;
   int level = 1;
+  String? authMessage;
 
   @override
   void initState() {
     super.initState();
-
     _requestPermissions();
+
+    setState(() {
+      authMessage = widget.authMessage;
+    });
 
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
@@ -82,6 +88,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            if (authMessage != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: Text(
+                  authMessage!,
+                  style: TextStyle(fontSize: 18, color: Colors.blue),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             Text('Waiting for authentication requests...'),
             SizedBox(height: 40),
             Text('Points: $points'),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 class ResultScreen extends StatelessWidget {
   final bool success;
@@ -10,6 +11,27 @@ class ResultScreen extends StatelessWidget {
     String message = success ? 'Authentication Successful!' : 'Authentication Failed!';
     Color messageColor = success ? Colors.green : Colors.red;
 
+    if (success) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(authMessage: message),
+        ),
+            (route) => false,
+      );
+    } else {
+      Future.delayed(Duration(seconds: 2), () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(authMessage: message),
+          ),
+              (route) => false,
+        );
+      });
+
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Result'),
@@ -19,13 +41,6 @@ class ResultScreen extends StatelessWidget {
           message,
           style: TextStyle(fontSize: 24, color: messageColor),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Return to HomeScreen
-          Navigator.popUntil(context, (route) => route.isFirst);
-        },
-        child: Icon(Icons.home),
       ),
     );
   }
