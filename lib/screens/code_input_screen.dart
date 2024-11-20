@@ -26,7 +26,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      bool isCodeCorrect = _secretCode == '123456'; // Simulated correct code
+      bool isCodeCorrect = _secretCode == '123456';
 
       // Update gamification stats
       int newPoints = widget.points;
