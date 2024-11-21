@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../elements/BadgeAnimation.dart';
 import 'home_screen.dart';
 
 class CodeInputScreen extends StatefulWidget {
@@ -33,8 +34,12 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
       int newLevel = widget.level;
 
       if (isCodeCorrect && widget.isValidRequest) {
-        newPoints += 5;
-        newPoints += 10;
+        newPoints += 15;
+        Overlay.of(context)?.insert(
+          OverlayEntry(
+            builder: (context) => BadgeAnimation(text: "+5"),
+          ),
+        );
         if (newPoints >= 50) {
           newLevel += 1;
           newPoints = 0;

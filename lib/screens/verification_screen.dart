@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../elements/BadgeAnimation.dart';
 import 'code_input_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -32,6 +33,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
       if (_enteredCode == widget.verificationCode) {
         widget.onUpdate(widget.points + 10, widget.level);
+        Overlay.of(context)?.insert(
+          OverlayEntry(
+            builder: (context) => BadgeAnimation(text: "+10"),
+          ),
+        );
         Navigator.push(
           context,
           MaterialPageRoute(
