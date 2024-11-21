@@ -5,22 +5,27 @@ import 'verification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? authMessage;
+  final int points;
+  final int level;
 
-  const HomeScreen({super.key, this.authMessage});
+  const HomeScreen({super.key, this.authMessage, this.points = 0, this.level = 1});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int points = 0;
-  int level = 1;
+  late int points;
+  late int level;
   String? authMessage;
 
   @override
   void initState() {
     super.initState();
     _requestPermissions();
+    points = widget.points;
+    level = widget.level;
+    authMessage = widget.authMessage;
 
     setState(() {
       authMessage = widget.authMessage;
@@ -54,8 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _navigateToVerificationScreen(RemoteMessage message) {
-    final verificationCode = message.data['verificationCode'] ?? ''; // Extract the verification code
-    final requestDetail = message.data['requestDetail'] ?? 'Unknown request'; // Extract request details
+    final verificationCode = message.data['verificationCode'] ?? '';
+    final requestDetail = message.data['requestDetail'] ?? 'Unknown request';
 
     Navigator.push(
       context,
@@ -65,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           level: level,
           onUpdate: _updateGamification,
           requestDetail: requestDetail,
-          verificationCode: verificationCode, // Pass verification code
+          verificationCode: verificationCode,
         ),
       ),
     );

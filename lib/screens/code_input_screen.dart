@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'result_screen.dart';
+import 'home_screen.dart';
 
 class CodeInputScreen extends StatefulWidget {
   final bool isValidRequest;
@@ -42,13 +42,19 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       widget.onUpdate(newPoints, newLevel);
 
-      Navigator.push(
+      // Redirect directly to HomeScreen
+      Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => ResultScreen(
-            success: isCodeCorrect && widget.isValidRequest,
+          builder: (context) => HomeScreen(
+            authMessage: isCodeCorrect
+                ? 'Authentication Successful!'
+                : 'Authentication Failed!',
+            points: newPoints,
+            level: newLevel,
           ),
         ),
+            (route) => false,
       );
     }
   }
