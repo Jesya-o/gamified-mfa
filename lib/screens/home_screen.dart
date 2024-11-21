@@ -133,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
               minHeight: 10,
             ),
             Text('$points/50 points to next level'),
+            SizedBox(height: 20),
           ],
         ),
       ),

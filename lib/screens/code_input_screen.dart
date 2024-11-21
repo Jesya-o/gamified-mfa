@@ -29,11 +29,11 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       bool isCodeCorrect = _secretCode == '123456';
 
-      // Update gamification stats
       int newPoints = widget.points;
       int newLevel = widget.level;
 
       if (isCodeCorrect && widget.isValidRequest) {
+        newPoints += 5;
         newPoints += 10;
         if (newPoints >= 50) {
           newLevel += 1;
@@ -43,7 +43,6 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       widget.onUpdate(newPoints, newLevel);
 
-      // Redirect directly to HomeScreen
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(

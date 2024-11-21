@@ -31,6 +31,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       _formKey.currentState!.save();
 
       if (_enteredCode == widget.verificationCode) {
+        widget.onUpdate(widget.points + 10, widget.level);
         Navigator.push(
           context,
           MaterialPageRoute(
