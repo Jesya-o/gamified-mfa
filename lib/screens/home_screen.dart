@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'verification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,28 +9,33 @@ class HomeScreen extends StatefulWidget {
   final int points;
   final int level;
 
-  const HomeScreen({super.key, this.authMessage, this.points = 0, this.level = 1});
+  const HomeScreen({
+    super.key,
+    this.authMessage,
+    this.points = 0,
+    this.level = 1
+  });
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late int points;
-  late int level;
+  int points = 0;
+  int level = 1;
   String? authMessage;
 
   @override
   void initState() {
     super.initState();
     _requestPermissions();
-    points = widget.points;
-    level = widget.level;
-    authMessage = widget.authMessage;
+    _loadGamificationData();
 
-    setState(() {
-      authMessage = widget.authMessage;
-    });
+    if (widget.authMessage != null) {
+      setState(() {
+        authMessage = widget.authMessage;
+      });
+    }
 
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
@@ -44,6 +50,20 @@ class _HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _navigateToVerificationScreen(message);
     });
+  }
+
+  Future<void> _loadGamificationData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      points = prefs.getInt('points') ?? 0;
+      level = prefs.getInt('level') ?? 1;
+    });
+  }
+
+  Future<void> _saveGamificationData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('points', points);
+    await prefs.setInt('level', level);
   }
 
   void _requestPermissions() async {
@@ -81,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
       points = newPoints;
       level = newLevel;
     });
+    _saveGamificationData();
   }
 
   @override

@@ -7,7 +7,8 @@ class CodeInputScreen extends StatefulWidget {
   final int level;
   final Function(int, int) onUpdate;
 
-  const CodeInputScreen({super.key,
+  const CodeInputScreen({
+    super.key,
     required this.isValidRequest,
     required this.points,
     required this.level,
