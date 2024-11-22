@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/gamification_manager.dart';
+import '../elements/points_display.dart';
 import 'add_service.dart';
 import 'verification_screen.dart';
 
@@ -116,36 +117,39 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (authMessage != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-              ),
-            GestureDetector(
-              onTap: _receiveRequest,
-              child: Text(
-                'Waiting for authentication requests...',
-                style: TextStyle(fontSize: 16),
-              ),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: _receiveRequest,
+                  child: Text(
+                    'Waiting for authentication requests...',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                SizedBox(height: 40),
+              ],
             ),
-            SizedBox(height: 40),
-            if (_isGamificationEnabled) ...[
-              Text('Points: $points'),
-              Text('Level: $level'),
-              SizedBox(height: 20),
-              LinearProgressIndicator(
-                value: points / 50,
-                minHeight: 10,
-              ),
-              SizedBox(height: 10),
-              Text('$points/50 points to next level'),
-            ],
-            SizedBox(height: 20),
-          ],
-        ),
+          ),
+          if (_isGamificationEnabled)
+            FutureBuilder(
+              future: Future.wait([
+                GamificationManager.getPoints(),
+                GamificationManager.getLevel()
+              ]),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  final data = snapshot.data as List<int>;
+                  return PointsDisplay(points: data[0], level: data[1]);
+                }
+                return SizedBox.shrink(); // Placeholder for loading
+              },
+            ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

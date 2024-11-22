@@ -3,11 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/badge_animation.dart';
 import '../elements/fade_badge.dart';
 import '../elements/gamification_manager.dart';
+import '../elements/points_display.dart';
 import 'home_screen.dart';
 
 class CodeInputScreen extends StatefulWidget {
-
-  const CodeInputScreen({ super.key });
+  const CodeInputScreen({super.key});
 
   @override
   _CodeInputScreenState createState() => _CodeInputScreenState();
@@ -37,7 +37,9 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       bool isCodeCorrect = _secretCode == '123456';
 
-      String message = isCodeCorrect ? "Authentication Successful!" : "Authentication Failed!";
+      String message = isCodeCorrect
+          ? "Authentication Successful!"
+          : "Authentication Failed!";
       Color badgeColor = isCodeCorrect ? Colors.green : Colors.red;
 
       Overlay.of(context)?.insert(
@@ -45,7 +47,6 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
           builder: (context) => FadeBadge(message: message, color: badgeColor),
         ),
       );
-
 
       if (isCodeCorrect) {
         int currentPoints = await GamificationManager.getPoints();
@@ -71,9 +72,8 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen()),
-            (route) => false,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false,
       );
     }
   }
@@ -81,40 +81,58 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Enter Secret Code'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Text('Please enter your secret code:'),
-              TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Secret Code',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the code';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _secretCode = value!;
-                },
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _submitCode,
-                child: Text('Submit'),
-              ),
-            ],
-          ),
+        appBar: AppBar(
+          title: Text('Enter Secret Code'),
         ),
-      ),
-    );
+        body: Stack(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Text('Please enter your secret code:'),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Secret Code',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter the code';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _secretCode = value!;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _submitCode,
+                      child: Text('Submit'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (_isGamificationEnabled)
+              FutureBuilder(
+                future: Future.wait([
+                  GamificationManager.getPoints(),
+                  GamificationManager.getLevel()
+                ]),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    final data = snapshot.data as List<int>;
+                    return PointsDisplay(points: data[0], level: data[1]);
+                  }
+                  return SizedBox.shrink(); // Placeholder for loading
+                },
+              ),
+          ],
+        ));
   }
 }

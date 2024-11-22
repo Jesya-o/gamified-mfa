@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/badge_animation.dart';
 import '../elements/gamification_manager.dart';
+import '../elements/points_display.dart';
 import 'code_input_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -82,47 +83,67 @@ class _VerificationScreenState extends State<VerificationScreen> {
       appBar: AppBar(
         title: Text('Verify Request'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      body:
+          Stack(
             children: [
-              Text(
-                'Authentication Request Details:',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 10),
-              Text(
-                widget.requestDetail,
-                style: TextStyle(fontSize: 16),
-              ),
-              SizedBox(height: 20),
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Verification Code',
-                  errorText: _errorMessage.isNotEmpty ? _errorMessage : null,
+              Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Authentication Request Details:',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        widget.requestDetail,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      SizedBox(height: 20),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Verification Code',
+                          errorText: _errorMessage.isNotEmpty ? _errorMessage : null,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the verification code';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          _enteredCode = value!;
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: _verifyRequest,
+                        child: Text('Verify'),
+                      ),
+                    ],
+                  ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the verification code';
-                  }
-                  return null;
-                },
-                onSaved: (value) {
-                  _enteredCode = value!;
-                },
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _verifyRequest,
-                child: Text('Verify'),
-              ),
+              if (_isGamificationEnabled)
+                FutureBuilder(
+                  future: Future.wait([
+                    GamificationManager.getPoints(),
+                    GamificationManager.getLevel()
+                  ]),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      final data = snapshot.data as List<int>;
+                      return PointsDisplay(points: data[0], level: data[1]);
+                    }
+                    return SizedBox.shrink(); // Placeholder for loading
+                  },
+                ),
             ],
-          ),
-        ),
-      ),
+          )
     );
   }
 }
