@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'verification_screen.dart';
 
@@ -123,7 +124,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('MFA Gamification'),
+        title: Text('Authenticator'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsScreen(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
