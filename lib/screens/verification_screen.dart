@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../elements/BadgeAnimation.dart';
+import '../elements/badge_animation.dart';
 import '../elements/gamification_manager.dart';
 import 'code_input_screen.dart';
 
