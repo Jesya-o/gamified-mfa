@@ -42,7 +42,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
         );
         if (newPoints >= 50) {
           newLevel += 1;
-          newPoints = 0;
+          newPoints = newPoints - 50;
         }
       }
 
