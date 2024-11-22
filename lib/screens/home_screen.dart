@@ -96,6 +96,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _receiveRequest() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VerificationScreen(
+          points: points,
+          level: level,
+          onUpdate: _updateGamification,
+          requestDetail: 'request detail',
+          verificationCode: '1234',
+        ),
+      ),
+    );
+  }
+
   void _updateGamification(int newPoints, int newLevel) {
     setState(() {
       points = newPoints;
@@ -123,7 +138,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-            Text('Waiting for authentication requests...'),
+            GestureDetector(
+              onTap: _receiveRequest,
+              child: Text(
+                'Waiting for authentication requests...',
+                style: TextStyle(fontSize: 16), // Ensure it looks like regular text
+              ),
+            ),
             SizedBox(height: 40),
             Text('Points: $points'),
             Text('Level: $level'),
