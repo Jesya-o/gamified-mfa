@@ -8,11 +8,9 @@ import 'add_service.dart';
 import 'verification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String? authMessage;
 
   const HomeScreen({
     super.key,
-    this.authMessage,
   });
 
   @override
@@ -31,12 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadSettings();
     _requestPermissions();
     _loadGamificationData();
-
-    if (widget.authMessage != null) {
-      setState(() {
-        authMessage = widget.authMessage;
-      });
-    }
 
     FirebaseMessaging.instance.getInitialMessage().then((message) {
       if (message != null) {
@@ -131,11 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
             if (authMessage != null)
               Padding(
                 padding: const EdgeInsets.only(bottom: 20.0),
-                child: Text(
-                  authMessage!,
-                  style: TextStyle(fontSize: 18, color: Colors.blue),
-                  textAlign: TextAlign.center,
-                ),
               ),
             GestureDetector(
               onTap: _receiveRequest,

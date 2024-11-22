@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/badge_animation.dart';
+import '../elements/fade_badge.dart';
 import '../elements/gamification_manager.dart';
 import 'home_screen.dart';
 
@@ -36,6 +37,16 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       bool isCodeCorrect = _secretCode == '123456';
 
+      String message = isCodeCorrect ? "Authentication Successful!" : "Authentication Failed!";
+      Color badgeColor = isCodeCorrect ? Colors.green : Colors.red;
+
+      Overlay.of(context)?.insert(
+        OverlayEntry(
+          builder: (context) => FadeBadge(message: message, color: badgeColor),
+        ),
+      );
+
+
       if (isCodeCorrect) {
         int currentPoints = await GamificationManager.getPoints();
         int currentLevel = await GamificationManager.getLevel();
@@ -61,11 +72,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(
-            authMessage: isCodeCorrect
-                ? 'Authentication Successful!'
-                : 'Authentication Failed!',
-          )),
+          builder: (context) => HomeScreen()),
             (route) => false,
       );
     }
