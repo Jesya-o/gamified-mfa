@@ -39,15 +39,15 @@ class _BadgeAnimationState extends State<BadgeAnimation> with SingleTickerProvid
       animation: _opacityAnimation,
       builder: (context, child) {
         return Positioned(
-          top: 50,
-          left: MediaQuery.of(context).size.width / 2 - 50,
+          top: 120,
+          left: MediaQuery.of(context).size.width / 2 + 60,
           child: Opacity(
             opacity: _opacityAnimation.value,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(10),
+                color: Colors.lightGreen,
+                borderRadius: BorderRadius.circular(15),
               ),
               child: Text(
                 widget.text,
