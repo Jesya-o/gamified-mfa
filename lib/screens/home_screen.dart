@@ -26,10 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int points = 0;
   int level = 1;
   String? authMessage;
+  bool _isGamificationEnabled = true;
 
   @override
   void initState() {
     super.initState();
+    _loadSettings();
     _requestPermissions();
     _loadGamificationData();
 
@@ -51,6 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _navigateToVerificationScreen(message);
+    });
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isGamificationEnabled = prefs.getBool('isGamificationEnabled') ?? true;
     });
   }
 
@@ -135,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 MaterialPageRoute(
                   builder: (context) => SettingsScreen(),
                 ),
-              );
+              ).then((_) => _loadSettings());
             },
           ),
         ],
@@ -157,18 +166,20 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: _receiveRequest,
               child: Text(
                 'Waiting for authentication requests...',
-                style: TextStyle(fontSize: 16), // Ensure it looks like regular text
+                style: TextStyle(fontSize: 16),
               ),
             ),
             SizedBox(height: 40),
-            Text('Points: $points'),
-            Text('Level: $level'),
-            SizedBox(height: 20),
-            LinearProgressIndicator(
-              value: points / 50,
-              minHeight: 10,
-            ),
-            Text('$points/50 points to next level'),
+            if (_isGamificationEnabled) ...[
+              Text('Points: $points'),
+              Text('Level: $level'),
+              SizedBox(height: 20),
+              LinearProgressIndicator(
+                value: points / 50,
+                minHeight: 10,
+              ),
+              Text('$points/50 points to next level'),
+            ],
             SizedBox(height: 20),
           ],
         ),

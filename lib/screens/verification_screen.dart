@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/BadgeAnimation.dart';
 import 'code_input_screen.dart';
 
@@ -26,17 +27,33 @@ class _VerificationScreenState extends State<VerificationScreen> {
   final _formKey = GlobalKey<FormState>();
   String _enteredCode = '';
   String _errorMessage = '';
+  bool _isGamificationEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isGamificationEnabled = prefs.getBool('isGamificationEnabled') ?? true;
+    });
+  }
 
   void _verifyRequest() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
       if (_enteredCode == widget.verificationCode) {
-        Overlay.of(context)?.insert(
-          OverlayEntry(
-            builder: (context) => BadgeAnimation(text: "+10"),
-          ),
-        );
+        if (_isGamificationEnabled) {
+          Overlay.of(context)?.insert(
+            OverlayEntry(
+              builder: (context) => BadgeAnimation(text: "+10"),
+            ),
+          );
+        }
         Navigator.push(
           context,
           MaterialPageRoute(

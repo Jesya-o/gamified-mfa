@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/BadgeAnimation.dart';
 import 'home_screen.dart';
 
@@ -23,6 +24,20 @@ class CodeInputScreen extends StatefulWidget {
 class _CodeInputScreenState extends State<CodeInputScreen> {
   final _formKey = GlobalKey<FormState>();
   String _secretCode = '';
+  bool _isGamificationEnabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isGamificationEnabled = prefs.getBool('isGamificationEnabled') ?? true;
+    });
+  }
 
   void _submitCode() {
     if (_formKey.currentState!.validate()) {
@@ -35,11 +50,13 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       if (isCodeCorrect && widget.isValidRequest) {
         newPoints += 15;
-        Overlay.of(context)?.insert(
-          OverlayEntry(
-            builder: (context) => BadgeAnimation(text: "+5"),
-          ),
-        );
+        if (_isGamificationEnabled) {
+          Overlay.of(context)?.insert(
+            OverlayEntry(
+              builder: (context) => BadgeAnimation(text: "+5"),
+            ),
+          );
+        }
         if (newPoints >= 50) {
           newLevel += 1;
           newPoints = newPoints - 50;
