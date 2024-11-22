@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'add_service.dart';
 import 'verification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -171,6 +172,17 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddService(),
+            ),
+          );
+        },
+        child: Icon(Icons.qr_code), // QR code icon
       ),
     );
   }
