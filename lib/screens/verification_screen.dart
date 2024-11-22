@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/BadgeAnimation.dart';
+import '../elements/gamification_manager.dart';
 import 'code_input_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
-  final int points;
-  final int level;
-  final Function(int, int) onUpdate;
   final String requestDetail;
   final String verificationCode;
 
   const VerificationScreen({
     super.key,
-    required this.points,
-    required this.level,
-    required this.onUpdate,
     required this.requestDetail,
     required this.verificationCode,
   });
@@ -42,7 +37,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     });
   }
 
-  void _verifyRequest() {
+  Future<void> _verifyRequest() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
@@ -54,15 +49,23 @@ class _VerificationScreenState extends State<VerificationScreen> {
             ),
           );
         }
+
+        int currentPoints = await GamificationManager.getPoints();
+        int currentLevel = await GamificationManager.getLevel();
+
+        int newPoints = currentPoints + 10;
+        if (newPoints >= 50) {
+          currentLevel += 1;
+          newPoints = 0;
+        }
+
+        await GamificationManager.updatePoints(newPoints);
+        await GamificationManager.updateLevel(currentLevel);
+
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CodeInputScreen(
-              isValidRequest: true,
-              points: widget.points,
-              level: widget.level,
-              onUpdate: widget.onUpdate,
-            ),
+            builder: (context) => CodeInputScreen(),
           ),
         );
       } else {

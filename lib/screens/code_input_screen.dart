@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/BadgeAnimation.dart';
+import '../elements/gamification_manager.dart';
 import 'home_screen.dart';
 
 class CodeInputScreen extends StatefulWidget {
-  final bool isValidRequest;
-  final int points;
-  final int level;
-  final Function(int, int) onUpdate;
 
-  const CodeInputScreen({
-    super.key,
-    required this.isValidRequest,
-    required this.points,
-    required this.level,
-    required this.onUpdate,
-  });
+  const CodeInputScreen({ super.key });
 
   @override
   _CodeInputScreenState createState() => _CodeInputScreenState();
@@ -39,17 +30,25 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
     });
   }
 
-  void _submitCode() {
+  Future<void> _submitCode() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
       bool isCodeCorrect = _secretCode == '123456';
 
-      int newPoints = widget.points;
-      int newLevel = widget.level;
+      if (isCodeCorrect) {
+        int currentPoints = await GamificationManager.getPoints();
+        int currentLevel = await GamificationManager.getLevel();
 
-      if (isCodeCorrect && widget.isValidRequest) {
-        newPoints += 15;
+        int newPoints = currentPoints + 5;
+        if (newPoints >= 50) {
+          currentLevel += 1;
+          newPoints = 0;
+        }
+
+        await GamificationManager.updatePoints(newPoints);
+        await GamificationManager.updateLevel(currentLevel);
+
         if (_isGamificationEnabled) {
           Overlay.of(context)?.insert(
             OverlayEntry(
@@ -57,13 +56,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
             ),
           );
         }
-        if (newPoints >= 50) {
-          newLevel += 1;
-          newPoints = newPoints - 50;
-        }
       }
-
-      widget.onUpdate(newPoints, newLevel);
 
       Navigator.pushAndRemoveUntil(
         context,
@@ -72,10 +65,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
             authMessage: isCodeCorrect
                 ? 'Authentication Successful!'
                 : 'Authentication Failed!',
-            points: newPoints,
-            level: newLevel,
-          ),
-        ),
+          )),
             (route) => false,
       );
     }

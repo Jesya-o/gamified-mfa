@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../elements/gamification_manager.dart';
 import 'add_service.dart';
 import 'verification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? authMessage;
-  final int points;
-  final int level;
 
   const HomeScreen({
     super.key,
     this.authMessage,
-    this.points = 0,
-    this.level = 1
   });
 
   @override
@@ -64,17 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadGamificationData() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      points = prefs.getInt('points') ?? 0;
-      level = prefs.getInt('level') ?? 1;
-    });
-  }
-
-  Future<void> _saveGamificationData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('points', points);
-    await prefs.setInt('level', level);
+    points = await GamificationManager.getPoints();
+    level = await GamificationManager.getLevel();
+    setState(() {});
   }
 
   void _requestPermissions() async {
@@ -97,9 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => VerificationScreen(
-          points: points,
-          level: level,
-          onUpdate: _updateGamification,
           requestDetail: requestDetail,
           verificationCode: verificationCode,
         ),
@@ -112,22 +98,11 @@ class _HomeScreenState extends State<HomeScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => VerificationScreen(
-          points: points,
-          level: level,
-          onUpdate: _updateGamification,
           requestDetail: 'request detail',
           verificationCode: '1234',
         ),
       ),
     );
-  }
-
-  void _updateGamification(int newPoints, int newLevel) {
-    setState(() {
-      points = newPoints;
-      level = newLevel;
-    });
-    _saveGamificationData();
   }
 
   @override
