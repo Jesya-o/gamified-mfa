@@ -12,13 +12,15 @@ class PointsDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double progress = points / 50;
+
     return Positioned(
       top: 10,
       right: 10,
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.7),
+          color: Colors.indigo.withOpacity(0.7),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -27,12 +29,22 @@ class PointsDisplay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'Points: $points',
+                  'Level: $level',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 Text(
-                  'Level: $level',
+                  'Points: $points',
                   style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+                SizedBox(height: 10),
+                SizedBox(
+                  width: 100, // Set a fixed width for the progression bar.
+                  child: LinearProgressIndicator(
+                    value: progress,
+                    minHeight: 5,
+                    backgroundColor: Colors.white60,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.lightGreen),
+                  ),
                 ),
               ],
             ),
