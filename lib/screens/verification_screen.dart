@@ -71,7 +71,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
         );
       } else {
         setState(() {
-          _errorMessage = 'Incorrect verification code. Authentication aborted.';
+          _errorMessage =
+              'Incorrect verification code. Authentication aborted.';
         });
       }
     }
@@ -80,70 +81,65 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Verify Request'),
-      ),
-      body:
-          Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Authentication Request Details:',
-                        style: TextStyle(fontSize: 18),
+        appBar: AppBar(
+          title: Text('Verify Request'),
+        ),
+        body: Stack(
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Authentication Request Details:',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      widget.requestDetail,
+                      style: TextStyle(fontSize: 16),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    TextField(
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        labelText: 'Verification Code',
+                        border: OutlineInputBorder(),
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        widget.requestDetail,
-                        style: TextStyle(fontSize: 16),
+                      controller: TextEditingController(
+                        text: _enteredCode,
                       ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Verification Code',
-                          errorText: _errorMessage.isNotEmpty ? _errorMessage : null,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter the verification code';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          _enteredCode = value!;
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: _verifyRequest,
-                        child: Text('Verify'),
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _verifyRequest,
+                      child: Text('Verify'),
+                    ),
+                  ],
                 ),
               ),
-              if (_isGamificationEnabled)
-                FutureBuilder(
-                  future: Future.wait([
-                    GamificationManager.getPoints(),
-                    GamificationManager.getLevel()
-                  ]),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData) {
-                      final data = snapshot.data as List<int>;
-                      return PointsDisplay(points: data[0], level: data[1]);
-                    }
-                    return SizedBox.shrink(); // Placeholder for loading
-                  },
-                ),
-            ],
-          )
-    );
+            ),
+            if (_isGamificationEnabled)
+              FutureBuilder(
+                future: Future.wait([
+                  GamificationManager.getPoints(),
+                  GamificationManager.getLevel()
+                ]),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    final data = snapshot.data as List<int>;
+                    return PointsDisplay(points: data[0], level: data[1]);
+                  }
+                  return SizedBox.shrink(); // Placeholder for loading
+                },
+              ),
+          ],
+        ));
   }
 }
