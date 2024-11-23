@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/badge_animation.dart';
 import '../elements/gamification_manager.dart';
+import '../elements/numeric_keypad.dart';
 import '../elements/points_display.dart';
+import '../elements/shake_animation.dart';
 import 'code_input_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -23,7 +25,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
   final _formKey = GlobalKey<FormState>();
   String _enteredCode = '';
   String _errorMessage = '';
+  String _inputCode = '';
   bool _isGamificationEnabled = true;
+  bool _shouldShake = false;
 
   @override
   void initState() {
@@ -38,52 +42,71 @@ class _VerificationScreenState extends State<VerificationScreen> {
     });
   }
 
-  Future<void> _verifyRequest() async {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-
-      if (_enteredCode == widget.verificationCode) {
-        if (_isGamificationEnabled) {
-          Overlay.of(context)?.insert(
-            OverlayEntry(
-              builder: (context) => BadgeAnimation(text: "+10"),
-            ),
-          );
-        }
-
-        int currentPoints = await GamificationManager.getPoints();
-        int currentLevel = await GamificationManager.getLevel();
-
-        int newPoints = currentPoints + 10;
-        if (newPoints >= 50) {
-          currentLevel += 1;
-          newPoints = 0;
-        }
-
-        await GamificationManager.updatePoints(newPoints);
-        await GamificationManager.updateLevel(currentLevel);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CodeInputScreen(),
-          ),
-        );
-      } else {
-        setState(() {
-          _errorMessage =
-              'Incorrect verification code. Authentication aborted.';
-        });
-      }
+  Future<void> _proceed() async {
+    if (_isGamificationEnabled) {
+      Overlay.of(context)?.insert(
+        OverlayEntry(
+          builder: (context) => BadgeAnimation(text: "+10"),
+        ),
+      );
     }
+
+    int currentPoints = await GamificationManager.getPoints();
+    int currentLevel = await GamificationManager.getLevel();
+
+    int newPoints = currentPoints + 10;
+    if (newPoints >= 50) {
+      currentLevel += 1;
+      newPoints = 0;
+    }
+
+    await GamificationManager.updatePoints(newPoints);
+    await GamificationManager.updateLevel(currentLevel);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CodeInputScreen(),
+      ),
+    );
   }
 
+  void _onNumberTap(String number) {
+    setState(() {
+      if (_inputCode.length < 6) {
+        _inputCode += number;
+      }
+    });
+  }
+
+  void _onBackspaceTap() {
+    setState(() {
+      if (_inputCode.isNotEmpty) {
+        _inputCode = _inputCode.substring(0, _inputCode.length - 1);
+      }
+    });
+  }
+
+  void _verifyCode() {
+    if (_inputCode == widget.verificationCode) {
+      _proceed();
+    } else {
+      setState(() {
+        _shouldShake = true;
+      });
+
+      Future.delayed(const Duration(milliseconds: 500), () {
+        setState(() {
+          _inputCode = '';
+          _shouldShake = false;
+        });
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Verify Request'),
-        ),
+        appBar: AppBar(),
         body: Stack(
           children: [
             Center(
@@ -93,31 +116,30 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Authentication Request Details:',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      widget.requestDetail,
-                      style: TextStyle(fontSize: 16),
+                      'Confirm the Request',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 20),
-                    TextField(
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        labelText: 'Verification Code',
-                        border: OutlineInputBorder(),
+                    ShakeAnimation(
+                      shouldShake: _shouldShake,
+                      child: Text(
+                        _inputCode,
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                        ),
                       ),
-                      controller: TextEditingController(
-                        text: _enteredCode,
-                      ),
+                    ),
+                    SizedBox(height: 20),
+                    NumericKeypad(
+                      onNumberTap: _onNumberTap,
+                      onBackspaceTap: _onBackspaceTap,
                     ),
                     SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: _verifyRequest,
+                      onPressed: _inputCode.isNotEmpty ? _verifyCode : null,
                       child: Text('Verify'),
                     ),
                   ],
@@ -136,7 +158,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     final data = snapshot.data as List<int>;
                     return PointsDisplay(points: data[0], level: data[1]);
                   }
-                  return SizedBox.shrink(); // Placeholder for loading
+                  return SizedBox.shrink();
                 },
               ),
           ],
