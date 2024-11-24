@@ -54,7 +54,7 @@ class _FadeBadgeState extends State<FadeBadge>
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
                 color: widget.color,
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(borderRadius),
               ),
               child: Text(
                 widget.message,

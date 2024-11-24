@@ -6,11 +6,10 @@ class BadgeAnimation extends StatefulWidget {
   final String text;
   final Duration duration;
 
-  const BadgeAnimation({
-    super.key,
-    required this.text,
-    this.duration = const Duration(seconds: successDuration)
-  });
+  const BadgeAnimation(
+      {super.key,
+      required this.text,
+      this.duration = const Duration(seconds: successDuration)});
 
   @override
   _BadgeAnimationState createState() => _BadgeAnimationState();
@@ -45,22 +44,24 @@ class _BadgeAnimationState extends State<BadgeAnimation>
       animation: _opacityAnimation,
       builder: (context, child) {
         return Positioned(
-          top: 120,
-          left: MediaQuery.of(context).size.width / 2 + 60,
+          top: pointsBadgeMT,
+          left: pointsBadgeML(MediaQuery.of(context).size),
           child: Opacity(
             opacity: _opacityAnimation.value,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
-                color: successColor,
-                borderRadius: BorderRadius.circular(15),
+                color: successColor.withOpacity(pointsBadgeOpacity),
+                borderRadius: BorderRadius.circular(borderRadius),
               ),
               child: Text(
                 widget.text,
                 style: TextStyle(
-                    color: messageColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+                  color: messageColor,
+                  fontSize: badgeTextSize,
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.none,
+                ),
               ),
             ),
           ),

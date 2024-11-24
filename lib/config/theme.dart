@@ -19,7 +19,8 @@ const double edgeInsets = 16.0;
 const double titleTextSize = 18.0;
 const double headingTextSize = 24.0;
 const double regularTextSize = 16.0;
-const double smallTextSize = 16.0;
+const double smallTextSize = 14.0;
+const double badgeTextSize = 12.0;
 
 const double inputScreenTitleMT = 100.0;
 const double inputScreenTitleMB = 40.0;
@@ -40,8 +41,13 @@ const double pointsBoxOpacity = 0.7;
 const double progressLineHeight = 5;
 const double progressLineWidth = 100;
 
+const double pointsBadgeMT = 85;
+double pointsBadgeML(Size screen) {return screen.width / 2 + 70;}
+const double pointsBadgeOpacity = 0.9;
+const double borderRadius = 15;
+
 // Animations
 const int shakeDelay = 500;
 const int shakeDuration = 400;
-const int successDuration = 2;
+const int successDuration = 4;
 

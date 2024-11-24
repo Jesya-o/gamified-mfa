@@ -23,7 +23,7 @@ class PointsDisplay extends StatelessWidget {
         padding: EdgeInsets.all(pointsEdgeInset),
         decoration: BoxDecoration(
           color: pointsBoxColor.withOpacity(pointsBoxOpacity),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Row(
           children: [
