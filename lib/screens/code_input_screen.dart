@@ -119,7 +119,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Confirm the Request',
+                      'Enter Secret Code',
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
