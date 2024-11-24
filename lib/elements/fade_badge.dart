@@ -61,7 +61,9 @@ class _FadeBadgeState extends State<FadeBadge>
                 style: TextStyle(
                     color: messageColor,
                     fontSize: smallTextSize,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.none,
+                ),
               ),
             ),
           );

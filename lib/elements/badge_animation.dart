@@ -6,10 +6,11 @@ class BadgeAnimation extends StatefulWidget {
   final String text;
   final Duration duration;
 
-  const BadgeAnimation(
-      {super.key,
-      required this.text,
-      this.duration = const Duration(seconds: successDuration)});
+  const BadgeAnimation({
+    super.key,
+    required this.text,
+    this.duration = const Duration(seconds: addedPointsDuration),
+  });
 
   @override
   _BadgeAnimationState createState() => _BadgeAnimationState();
@@ -19,6 +20,7 @@ class _BadgeAnimationState extends State<BadgeAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
+  late Animation<double> _shineAnimation;
 
   @override
   void initState() {
@@ -29,6 +31,9 @@ class _BadgeAnimationState extends State<BadgeAnimation>
     );
     _opacityAnimation =
         Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
+    _shineAnimation = Tween<double>(begin: -1.0, end: 2.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
     _controller.forward();
   }
 
@@ -41,7 +46,7 @@ class _BadgeAnimationState extends State<BadgeAnimation>
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _opacityAnimation,
+      animation: _controller,
       builder: (context, child) {
         return Positioned(
           top: pointsBadgeMT,
@@ -54,13 +59,28 @@ class _BadgeAnimationState extends State<BadgeAnimation>
                 color: successColor.withOpacity(pointsBadgeOpacity),
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
-              child: Text(
-                widget.text,
-                style: TextStyle(
-                  color: messageColor,
-                  fontSize: badgeTextSize,
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.none,
+              child: ShaderMask(
+                shaderCallback: (Rect bounds) {
+                  return LinearGradient(
+                    colors: [
+                      Colors.white.withOpacity(0.4),
+                      Colors.white.withOpacity(0.1),
+                      Colors.white.withOpacity(0.4),
+                    ],
+                    stops: [0.0, 0.5, 1.0],
+                    begin: Alignment(-_shineAnimation.value, -1.0),
+                    end: Alignment(_shineAnimation.value, 1.0),
+                  ).createShader(bounds);
+                },
+                blendMode: BlendMode.srcATop,
+                child: Text(
+                  widget.text,
+                  style: TextStyle(
+                    color: messageColor,
+                    fontSize: badgeTextSize,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.none,
+                  ),
                 ),
               ),
             ),

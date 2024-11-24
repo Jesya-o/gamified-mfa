@@ -16,6 +16,7 @@ const Color pointsProgressLineBackgroundColor = Colors.white60;
 
 // Sizes
 const double edgeInsets = 16.0;
+
 const double titleTextSize = 18.0;
 const double headingTextSize = 24.0;
 const double regularTextSize = 16.0;
@@ -49,5 +50,6 @@ const double borderRadius = 15;
 // Animations
 const int shakeDelay = 500;
 const int shakeDuration = 400;
+const int addedPointsDuration = 4;
 const int successDuration = 4;
 
