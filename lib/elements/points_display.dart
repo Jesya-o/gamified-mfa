@@ -15,7 +15,7 @@ class PointsDisplay extends StatelessWidget {
     double progress = points / 50;
 
     return Positioned(
-      top: 10,
+      top: 50,
       right: 10,
       child: Container(
         padding: EdgeInsets.all(10),

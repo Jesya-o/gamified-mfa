@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../elements/badge_animation.dart';
 import '../elements/fade_badge.dart';
 import '../elements/gamification_manager.dart';

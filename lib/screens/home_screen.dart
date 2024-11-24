@@ -1,15 +1,15 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../elements/gamification_manager.dart';
 import '../elements/points_display.dart';
 import 'add_service.dart';
 import 'verification_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({
     super.key,
   });
@@ -60,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _requestPermissions() async {
-    NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission(
       alert: true,
       badge: true,
       sound: true,

@@ -22,9 +22,6 @@ class VerificationScreen extends StatefulWidget {
 }
 
 class _VerificationScreenState extends State<VerificationScreen> {
-  final _formKey = GlobalKey<FormState>();
-  String _enteredCode = '';
-  String _errorMessage = '';
   String _inputCode = '';
   bool _isGamificationEnabled = true;
   bool _shouldShake = false;
