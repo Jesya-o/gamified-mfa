@@ -1,18 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/theme.dart';
 
 class BadgeAnimation extends StatefulWidget {
   final String text;
   final Duration duration;
 
-  const BadgeAnimation({Key? key, required this.text, this.duration = const Duration(seconds: 2)})
-      : super(key: key);
+  const BadgeAnimation({
+    super.key,
+    required this.text,
+    this.duration = const Duration(seconds: successDuration)
+  });
 
   @override
   _BadgeAnimationState createState() => _BadgeAnimationState();
 }
 
-class _BadgeAnimationState extends State<BadgeAnimation> with SingleTickerProviderStateMixin {
+class _BadgeAnimationState extends State<BadgeAnimation>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
 
@@ -23,7 +28,8 @@ class _BadgeAnimationState extends State<BadgeAnimation> with SingleTickerProvid
       duration: widget.duration,
       vsync: this,
     );
-    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
+    _opacityAnimation =
+        Tween<double>(begin: 1.0, end: 0.0).animate(_controller);
     _controller.forward();
   }
 
@@ -46,12 +52,15 @@ class _BadgeAnimationState extends State<BadgeAnimation> with SingleTickerProvid
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
-                color: Colors.lightGreen,
+                color: successColor,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Text(
                 widget.text,
-                style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: messageColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),

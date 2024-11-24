@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/theme.dart';
 
 class NumericKeypad extends StatelessWidget {
   final Function(String) onNumberTap;
@@ -26,7 +27,8 @@ class NumericKeypad extends StatelessWidget {
             onPressed: () => onNumberTap((index + 1).toString()),
             child: Text(
               (index + 1).toString(),
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: headingTextSize, fontWeight: FontWeight.bold),
             ),
           );
         } else if (index == 9) {
@@ -36,13 +38,14 @@ class NumericKeypad extends StatelessWidget {
             onPressed: () => onNumberTap('0'),
             child: Text(
               '0',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: headingTextSize, fontWeight: FontWeight.bold),
             ),
           );
         } else {
           return ElevatedButton(
             onPressed: onBackspaceTap,
-            child: Icon(Icons.backspace, size: 24),
+            child: Icon(Icons.backspace, size: headingTextSize),
           );
         }
       },

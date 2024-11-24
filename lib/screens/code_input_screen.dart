@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/code.dart';
+import 'package:mfa_gamification/config/points.dart';
+import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../elements/badge_animation.dart';
@@ -31,7 +35,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _isGamificationEnabled = prefs.getBool('isGamificationEnabled') ?? true;
+      _isGamificationEnabled = prefs.getBool(gamificationEnabledFlag) ?? true;
     });
   }
 
@@ -41,13 +45,14 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       Overlay.of(context)?.insert(
         OverlayEntry(
-          builder: (context) => FadeBadge(message: message, color: Colors.lightGreen),
+          builder: (context) =>
+              FadeBadge(message: message, color: successColor),
         ),
       );
-      
+
       Overlay.of(context)?.insert(
         OverlayEntry(
-          builder: (context) => BadgeAnimation(text: "+5"),
+          builder: (context) => BadgeAnimation(text: "+$codePoints"),
         ),
       );
     }
@@ -55,24 +60,24 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
     int currentPoints = await GamificationManager.getPoints();
     int currentLevel = await GamificationManager.getLevel();
 
-    int newPoints = currentPoints + 5;
-    if (newPoints >= 50) {
+    int newPoints = currentPoints + codePoints;
+    if (newPoints >= levelUpPoints) {
       currentLevel += 1;
       newPoints = 0;
     }
 
     await GamificationManager.updatePoints(newPoints);
     await GamificationManager.updateLevel(currentLevel);
-    
+
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => HomeScreen()),
-          (route) => false,
+      (route) => false,
     );
   }
 
   Future<void> _submitCode() async {
-    bool isCodeCorrect = _inputCode == '123456';
+    bool isCodeCorrect = _inputCode == secretCode;
     if (isCodeCorrect) {
       _proceed();
     } else {
@@ -80,7 +85,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
         _shouldShake = true;
       });
 
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(milliseconds: shakeDelay), () {
         setState(() {
           _inputCode = '';
           _shouldShake = false;
@@ -91,7 +96,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
   void _onNumberTap(String number) {
     setState(() {
-      if (_inputCode.length < 6) {
+      if (_inputCode.length < codeMaxLength) {
         _inputCode += number;
       }
     });
@@ -111,39 +116,44 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
         appBar: AppBar(),
         body: Stack(
           children: [
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(edgeInsets),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(height: inputScreenTitleMT),
                     Text(
                       'Enter Secret Code',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: titleTextSize, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: inputScreenTitleMB),
                     ShakeAnimation(
                       shouldShake: _shouldShake,
                       child: Text(
                         _inputCode,
                         style: TextStyle(
-                          fontSize: 32,
+                          fontSize: inputScreenCodeTextSize,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: 2,
+                          letterSpacing: inputScreenCodeLetterSpacing,
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    NumericKeypad(
-                      onNumberTap: _onNumberTap,
-                      onBackspaceTap: _onBackspaceTap,
+                    SizedBox(height: inputScreenCodeMB),
+                    SizedBox(
+                      width: keypadWidth,
+                      height: keypadHeight,
+                      child: NumericKeypad(
+                        onNumberTap: _onNumberTap,
+                        onBackspaceTap: _onBackspaceTap,
+                      ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: defaultSpaceBtwElements),
                     ElevatedButton(
                       onPressed: _inputCode.isNotEmpty ? _submitCode : null,
-                      child: Text('Verify'),
+                      child: Text('Submit'),
                     ),
                   ],
                 ),
@@ -161,7 +171,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                     final data = snapshot.data as List<int>;
                     return PointsDisplay(points: data[0], level: data[1]);
                   }
-                  return SizedBox.shrink(); // Placeholder for loading
+                  return SizedBox.shrink();
                 },
               ),
           ],

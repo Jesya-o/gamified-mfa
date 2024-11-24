@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/theme.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class AddService extends StatelessWidget {
@@ -7,27 +8,25 @@ class AddService extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Camera'),
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Add a Service',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: headingTextSize, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: defaultSpaceBtwElements),
             QrImageView(
               data: 'Sample QR Code Data',
               version: QrVersions.auto,
-              size: 200.0,
+              size: qrSize,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: defaultSpaceBtwElements),
             Text(
               'Scan this QR code to add a service',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: regularTextSize),
             ),
           ],
         ),

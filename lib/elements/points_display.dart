@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/points.dart';
+import 'package:mfa_gamification/config/theme.dart';
 
 class PointsDisplay extends StatelessWidget {
   final int points;
@@ -12,15 +14,15 @@ class PointsDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progress = points / 50;
+    double progress = points / levelUpPoints;
 
     return Positioned(
-      top: 50,
-      right: 10,
+      top: pointsMT,
+      right: pointsMR,
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(pointsEdgeInset),
         decoration: BoxDecoration(
-          color: Colors.indigo.withOpacity(0.7),
+          color: pointsBoxColor.withOpacity(pointsBoxOpacity),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -30,20 +32,22 @@ class PointsDisplay extends StatelessWidget {
               children: [
                 Text(
                   'Level: $level',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style:
+                      TextStyle(color: pointsColor, fontSize: regularTextSize),
                 ),
                 Text(
                   'Points: $points',
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(color: pointsColor, fontSize: smallTextSize),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: pointsEdgeInset),
                 SizedBox(
-                  width: 100, // Set a fixed width for the progression bar.
+                  width: progressLineWidth,
                   child: LinearProgressIndicator(
                     value: progress,
-                    minHeight: 5,
-                    backgroundColor: Colors.white60,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.lightGreen),
+                    minHeight: progressLineHeight,
+                    backgroundColor: pointsProgressLineBackgroundColor,
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(pointsProgressLineColor),
                   ),
                 ),
               ],

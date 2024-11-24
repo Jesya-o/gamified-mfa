@@ -1,6 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/code.dart';
+import 'package:mfa_gamification/config/theme.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _isGamificationEnabled = prefs.getBool('isGamificationEnabled') ?? true;
+      _isGamificationEnabled = prefs.getBool(gamificationEnabledFlag) ?? true;
     });
   }
 
@@ -73,8 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _navigateToVerificationScreen(RemoteMessage message) {
-    final verificationCode = message.data['verificationCode'] ?? '';
-    final requestDetail = message.data['requestDetail'] ?? 'Unknown request';
+    final verificationCode = message.data[verificationCodeRequestParam] ?? '';
+    final requestDetail = message.data[requestDetailRequestParam] ?? 'Unknown request';
 
     Navigator.push(
       context,
@@ -93,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
       MaterialPageRoute(
         builder: (context) => VerificationScreen(
           requestDetail: 'request detail',
-          verificationCode: '1234',
+          verificationCode: verificationCodeInManualRequest,
         ),
       ),
     );
@@ -128,10 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: _receiveRequest,
                   child: Text(
                     'Waiting for authentication requests...',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: regularTextSize),
                   ),
                 ),
-                SizedBox(height: 40),
               ],
             ),
           ),

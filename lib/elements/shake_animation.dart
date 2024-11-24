@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mfa_gamification/config/theme.dart';
 
 class ShakeAnimation extends StatefulWidget {
   final Widget child;
@@ -24,7 +25,7 @@ class _ShakeAnimationState extends State<ShakeAnimation>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: shakeDuration),
     );
     _shakeAnimation = TweenSequence([
       TweenSequenceItem(tween: Tween(begin: 0.0, end: -10.0), weight: 1),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/theme.dart';
 
 class FadeBadge extends StatefulWidget {
   final String message;
@@ -8,15 +9,16 @@ class FadeBadge extends StatefulWidget {
   const FadeBadge({
     super.key,
     required this.message,
-    this.color = Colors.green,
-    this.duration = const Duration(seconds: 2),
+    this.color = successColor,
+    this.duration = const Duration(seconds: successDuration),
   });
 
   @override
   _FadeBadgeState createState() => _FadeBadgeState();
 }
 
-class _FadeBadgeState extends State<FadeBadge> with SingleTickerProviderStateMixin {
+class _FadeBadgeState extends State<FadeBadge>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacity;
 
@@ -56,7 +58,10 @@ class _FadeBadgeState extends State<FadeBadge> with SingleTickerProviderStateMix
               ),
               child: Text(
                 widget.message,
-                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: messageColor,
+                    fontSize: smallTextSize,
+                    fontWeight: FontWeight.bold),
               ),
             ),
           );
