@@ -21,9 +21,9 @@ const double headingTextSize = 24.0;
 const double regularTextSize = 16.0;
 const double smallTextSize = 16.0;
 
-const double inputScreenTitleMT = 80.0;
+const double inputScreenTitleMT = 100.0;
 const double inputScreenTitleMB = 40.0;
-const double inputScreenCodeMB = 40.0;
+const double inputScreenCodeMB = 20.0;
 const double inputScreenCodeTextSize = 32.0;
 const double inputScreenCodeLetterSpacing = 2.0;
 
