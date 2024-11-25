@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
 
 class FadeBadge extends StatefulWidget {
   final String message;
@@ -45,7 +45,7 @@ class _FadeBadgeState extends State<FadeBadge>
   Widget build(BuildContext context) {
     return Positioned(
       top: MediaQuery.of(context).size.height * 0.3,
-      left: MediaQuery.of(context).size.width * 0.2,
+      left: MediaQuery.of(context).size.width * 0.27,
       child: AnimatedBuilder(
         animation: _opacity,
         builder: (context, child) {

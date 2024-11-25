@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mfa_gamification/config/code.dart';
 import 'package:mfa_gamification/config/points.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +12,7 @@ import '../elements/gamification_manager.dart';
 import '../elements/numeric_keypad.dart';
 import '../elements/points_display.dart';
 import '../elements/shake_animation.dart';
+import '../util/custom_colors.dart';
 import 'home_screen.dart';
 
 class CodeInputScreen extends StatefulWidget {
@@ -47,8 +48,9 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
 
       Overlay.of(context)?.insert(
         OverlayEntry(
-          builder: (context) =>
-              FadeBadge(message: message, color: successColor(context)),
+          builder: (context) => FadeBadge(
+              message: message,
+              color: Theme.of(context).extension<CustomColors>()!.successColor),
         ),
       );
 
@@ -167,7 +169,8 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                         children: [
                           Spacer(),
                           ElevatedButton(
-                            onPressed: _inputCode.isNotEmpty ? _submitCode : null,
+                            onPressed:
+                                _inputCode.isNotEmpty ? _submitCode : null,
                             child: Text('Submit'),
                           ),
                           SizedBox(width: submitAndBackSpace),
@@ -176,7 +179,8 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                             onPressed: () {
                               setState(() {
                                 if (_inputCode.isNotEmpty) {
-                                  _inputCode = _inputCode.substring(0, _inputCode.length - 1);
+                                  _inputCode = _inputCode.substring(
+                                      0, _inputCode.length - 1);
                                 }
                               });
                             },

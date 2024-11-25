@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
 
 class NumericKeypad extends StatelessWidget {
   final Function(String) onNumberTap;

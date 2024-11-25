@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
 
 class ShakeAnimation extends StatefulWidget {
   final Widget child;

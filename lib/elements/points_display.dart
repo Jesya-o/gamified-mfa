@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mfa_gamification/config/points.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
+import 'package:mfa_gamification/util/custom_colors.dart';
 
 class PointsDisplay extends StatelessWidget {
   final int points;
@@ -22,7 +23,10 @@ class PointsDisplay extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(pointsEdgeInset),
         decoration: BoxDecoration(
-          color: pointsBoxColor(context).withOpacity(pointsBoxOpacity),
+          color: Theme.of(context)
+              .extension<CustomColors>()
+              ?.pointsBoxColor
+              .withOpacity(pointsBoxOpacity),
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Row(
@@ -44,9 +48,12 @@ class PointsDisplay extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: progressLineHeight,
-                    backgroundColor: pointsProgressLineBackgroundColor(context),
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(pointsProgressLineColor(context)),
+                    backgroundColor: Theme.of(context)
+                        .extension<CustomColors>()!
+                        .pointsProgressLineBackgroundColor,
+                    valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context)
+                        .extension<CustomColors>()!
+                        .pointsProgressLineColor),
                   ),
                 ),
               ],

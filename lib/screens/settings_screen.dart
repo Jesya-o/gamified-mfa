@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mfa_gamification/config/points.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

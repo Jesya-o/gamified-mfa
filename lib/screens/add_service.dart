@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class AddService extends StatelessWidget {

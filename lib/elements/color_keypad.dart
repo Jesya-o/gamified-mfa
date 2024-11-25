@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
+
+import '../util/bubble_colors.dart';
 
 class ColorKeypad extends StatelessWidget {
   final Function(String) onColorTap;
@@ -10,16 +12,16 @@ class ColorKeypad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = [
-      bubbleColor1,
-      bubbleColor2,
-      bubbleColor3,
-      bubbleColor4,
-      bubbleColor5,
-      bubbleColor6,
-      bubbleColor7,
-      bubbleColor8,
-      bubbleColor9,
-      bubbleColor0,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor1,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor2,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor3,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor4,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor5,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor6,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor7,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor8,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor9,
+      Theme.of(context).extension<BubbleColors>()?.bubbleColor0,
     ];
 
     final double bubbleSize = colorBubbleSize;

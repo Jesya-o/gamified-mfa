@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mfa_gamification/config/code.dart';
 import 'package:mfa_gamification/config/points.dart';
-import 'package:mfa_gamification/config/theme.dart';
+import 'package:mfa_gamification/config/config.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/badge_animation.dart';
