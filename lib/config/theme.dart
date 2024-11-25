@@ -14,6 +14,8 @@ const Color messageColor = Colors.white;
 const Color pointsProgressLineColor = Colors.lightGreen;
 const Color pointsProgressLineBackgroundColor = Colors.white60;
 
+const Color optionNotAvailableColor = Colors.black26;
+
 // Sizes
 const double edgeInsets = 16.0;
 

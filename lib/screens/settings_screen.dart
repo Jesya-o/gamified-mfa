@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/points.dart';
 import 'package:mfa_gamification/config/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../elements/gamification_manager.dart';
+
 const String gamificationEnabledFlag = 'isGamificationEnabled';
+const String colorfulInputFlag = 'isColorfulInput';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -11,6 +15,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isGamificationEnabled = true;
+  bool _isColorfulInput = true;
 
   @override
   void initState() {
@@ -22,6 +27,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _isGamificationEnabled = prefs.getBool(gamificationEnabledFlag) ?? true;
+      _isColorfulInput = prefs.getBool(colorfulInputFlag) ?? true;
     });
   }
 
@@ -31,6 +37,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       _isGamificationEnabled = value;
     });
+  }
+
+  Future<void> _toggleInput(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(colorfulInputFlag, value);
+    setState(() {
+      _isColorfulInput = value;
+    });
+  }
+
+  Future<bool> _isColorfulInputAvailable() async {
+    int currentLevel = await GamificationManager.getLevel();
+    return currentLevel > colorfulInputAvailabilityLevel;
   }
 
   @override
@@ -56,6 +75,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onChanged: _toggleGamification,
                 ),
               ],
+            ),
+            FutureBuilder<bool>(
+              future: _isColorfulInputAvailable(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return CircularProgressIndicator();
+                }
+
+                final isAvailable = snapshot.data!;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Colorful Secret Code',
+                      style: TextStyle(
+                        fontSize: titleTextSize,
+                        color: isAvailable
+                            ? null
+                            : optionNotAvailableColor,
+                      ),
+                    ),
+                    Switch(
+                      value: isAvailable ? _isColorfulInput : false,
+                      onChanged: isAvailable ? _toggleInput : null,
+                    ),
+                  ],
+                );
+              },
             ),
           ],
         ),
