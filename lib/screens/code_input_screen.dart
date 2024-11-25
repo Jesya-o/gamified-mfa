@@ -48,7 +48,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
       Overlay.of(context)?.insert(
         OverlayEntry(
           builder: (context) =>
-              FadeBadge(message: message, color: successColor),
+              FadeBadge(message: message, color: successColor(context)),
         ),
       );
 

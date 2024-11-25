@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mfa_gamification/config/theme.dart';
 
 class FadeBadge extends StatefulWidget {
@@ -9,7 +10,7 @@ class FadeBadge extends StatefulWidget {
   const FadeBadge({
     super.key,
     required this.message,
-    this.color = successColor,
+    this.color = Colors.lightGreen,
     this.duration = const Duration(seconds: successDuration),
   });
 
@@ -63,6 +64,7 @@ class _FadeBadgeState extends State<FadeBadge>
                     fontSize: smallTextSize,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.none,
+                    fontFamily: GoogleFonts.figtree().fontFamily,
                 ),
               ),
             ),

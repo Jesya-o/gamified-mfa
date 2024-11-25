@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 // Colors
-const Color successColor = Colors.lightGreen;
 
+Color successColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? const Color(0xFF161528)
+      : const Color(0xFF81AC5D);
+}
 Color pointsBoxColor(BuildContext context) {
   return Theme.of(context).brightness == Brightness.dark
       ? const Color(0xFF161528)

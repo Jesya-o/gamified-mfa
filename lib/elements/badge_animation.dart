@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mfa_gamification/config/theme.dart';
 
 class BadgeAnimation extends StatefulWidget {
@@ -56,7 +57,7 @@ class _BadgeAnimationState extends State<BadgeAnimation>
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               decoration: BoxDecoration(
-                color: successColor.withOpacity(pointsBadgeOpacity),
+                color: successColor(context).withOpacity(pointsBadgeOpacity),
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
               child: ShaderMask(
@@ -80,6 +81,7 @@ class _BadgeAnimationState extends State<BadgeAnimation>
                     fontSize: badgeTextSize,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.none,
+                    fontFamily: GoogleFonts.figtree().fontFamily,
                   ),
                 ),
               ),
