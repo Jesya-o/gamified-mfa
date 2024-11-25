@@ -3,11 +3,37 @@ import 'package:flutter/material.dart';
 // Colors
 const Color successColor = Colors.lightGreen;
 
-const Color pointsBoxColor = Color(0xFF4E6E5D);
-const Color pointsColor = Colors.white;
-const Color messageColor = Colors.white;
-const Color pointsProgressLineColor = Colors.lightGreen;
-const Color pointsProgressLineBackgroundColor = Colors.white60;
+Color pointsBoxColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? const Color(0xFF161528)
+      : const Color(0xFF161627);
+}
+Color textColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? const Color(0xFF161528)
+      : const Color(0xFFF2F2F8);
+}
+Color pointsProgressLineColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? const Color(0xFF161528)
+      : const Color(0xFF81AC5D);
+}
+Color pointsProgressLineBackgroundColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? const Color(0xFF161528)
+      : const Color(0xFFF2F2F8);
+}
+
+Color keypadBackgroundColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? const Color(0xFF161528)
+      : const Color(0xFFF7F3F5);
+}
+Color keypadTextColor(BuildContext context) {
+  return Theme.of(context).brightness == Brightness.dark
+      ? const Color(0xFF161528)
+      : const Color(0xFF2A2A50);
+}
 
 const Color optionNotAvailableColor = Colors.black26;
 

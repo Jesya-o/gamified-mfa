@@ -22,7 +22,7 @@ class PointsDisplay extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(pointsEdgeInset),
         decoration: BoxDecoration(
-          color: pointsBoxColor.withOpacity(pointsBoxOpacity),
+          color: pointsBoxColor(context).withOpacity(pointsBoxOpacity),
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: Row(
@@ -33,11 +33,11 @@ class PointsDisplay extends StatelessWidget {
                 Text(
                   'Level: $level',
                   style:
-                      TextStyle(color: pointsColor, fontSize: regularTextSize),
+                      TextStyle(color: textColor(context), fontSize: regularTextSize),
                 ),
                 Text(
                   'Points: $points',
-                  style: TextStyle(color: pointsColor, fontSize: smallTextSize),
+                  style: TextStyle(color: textColor(context), fontSize: smallTextSize),
                 ),
                 SizedBox(height: pointsEdgeInset),
                 SizedBox(
@@ -45,9 +45,9 @@ class PointsDisplay extends StatelessWidget {
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: progressLineHeight,
-                    backgroundColor: pointsProgressLineBackgroundColor,
+                    backgroundColor: pointsProgressLineBackgroundColor(context),
                     valueColor:
-                        AlwaysStoppedAnimation<Color>(pointsProgressLineColor),
+                        AlwaysStoppedAnimation<Color>(pointsProgressLineColor(context)),
                   ),
                 ),
               ],

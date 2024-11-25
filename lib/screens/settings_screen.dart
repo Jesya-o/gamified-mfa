@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mfa_gamification/config/points.dart';
 import 'package:mfa_gamification/config/theme.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../config/theme_data.dart';
 import '../elements/gamification_manager.dart';
+import '../main.dart';
 
 const String gamificationEnabledFlag = 'isGamificationEnabled';
 const String colorfulInputFlag = 'isColorfulInput';
@@ -54,6 +57,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
@@ -103,6 +108,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 );
               },
+            ),
+            ListTile(
+              title: Text('Light Theme'),
+              trailing: Radio<bool>(
+                value: false,
+                groupValue: themeProvider.currentTheme == darkTheme,
+                onChanged: (value) {
+                  themeProvider.toggleTheme(false); // Switch to light theme
+                },
+              ),
+            ),
+            ListTile(
+              title: Text('Dark Theme'),
+              trailing: Radio<bool>(
+                value: true,
+                groupValue: themeProvider.currentTheme == darkTheme,
+                onChanged: (value) {
+                  themeProvider.toggleTheme(true); // Switch to dark theme
+                },
+              ),
             ),
           ],
         ),

@@ -76,7 +76,7 @@ class _BadgeAnimationState extends State<BadgeAnimation>
                 child: Text(
                   widget.text,
                   style: TextStyle(
-                    color: messageColor,
+                    color: textColor(context),
                     fontSize: badgeTextSize,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.none,

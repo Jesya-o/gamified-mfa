@@ -28,7 +28,10 @@ class NumericKeypad extends StatelessWidget {
             child: Text(
               (index + 1).toString(),
               style: TextStyle(
-                  fontSize: headingTextSize, fontWeight: FontWeight.bold),
+                  fontSize: headingTextSize,
+                  fontWeight: FontWeight.bold,
+                  color: keypadTextColor(context),
+                  backgroundColor: keypadBackgroundColor(context)),
             ),
           );
         } else if (index == 9) {
@@ -39,7 +42,10 @@ class NumericKeypad extends StatelessWidget {
             child: Text(
               '0',
               style: TextStyle(
-                  fontSize: headingTextSize, fontWeight: FontWeight.bold),
+                  fontSize: headingTextSize,
+                  fontWeight: FontWeight.bold,
+                  color: keypadTextColor(context),
+                  backgroundColor: keypadBackgroundColor(context)),
             ),
           );
         } else {
