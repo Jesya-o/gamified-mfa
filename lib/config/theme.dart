@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 // Colors
-const Color primaryColor = Colors.blue;
-const Color secondaryColor = Colors.green;
-const Color buttonColor = Colors.orange;
-const Color textColor = Colors.black;
-
 const Color successColor = Colors.lightGreen;
 
 const Color pointsBoxColor = Color(0xFF4E6E5D);
