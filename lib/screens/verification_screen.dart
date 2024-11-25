@@ -120,8 +120,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     SizedBox(height: inputScreenTitleMT),
                     Text(
                       'Confirm the Request',
-                      style: TextStyle(
-                          fontSize: titleTextSize, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleMedium,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: inputScreenTitleMB),

@@ -15,7 +15,7 @@ class AddService extends StatelessWidget {
           children: [
             Text(
               'Add a Service',
-              style: TextStyle(fontSize: headingTextSize, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(height: defaultSpaceBtwElements),
             QrImageView(
@@ -26,7 +26,7 @@ class AddService extends StatelessWidget {
             SizedBox(height: defaultSpaceBtwElements),
             Text(
               'Scan this QR code to add a service',
-              style: TextStyle(fontSize: regularTextSize),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),

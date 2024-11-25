@@ -32,12 +32,11 @@ class PointsDisplay extends StatelessWidget {
               children: [
                 Text(
                   'Level: $level',
-                  style:
-                      TextStyle(color: textColor(context), fontSize: regularTextSize),
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
                 Text(
                   'Points: $points',
-                  style: TextStyle(color: textColor(context), fontSize: smallTextSize),
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
                 SizedBox(height: pointsEdgeInset),
                 SizedBox(

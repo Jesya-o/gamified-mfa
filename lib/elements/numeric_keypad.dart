@@ -27,11 +27,7 @@ class NumericKeypad extends StatelessWidget {
             onPressed: () => onNumberTap((index + 1).toString()),
             child: Text(
               (index + 1).toString(),
-              style: TextStyle(
-                  fontSize: headingTextSize,
-                  fontWeight: FontWeight.bold,
-                  color: keypadTextColor(context),
-                  backgroundColor: keypadBackgroundColor(context)),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           );
         } else if (index == 9) {
@@ -41,17 +37,13 @@ class NumericKeypad extends StatelessWidget {
             onPressed: () => onNumberTap('0'),
             child: Text(
               '0',
-              style: TextStyle(
-                  fontSize: headingTextSize,
-                  fontWeight: FontWeight.bold,
-                  color: keypadTextColor(context),
-                  backgroundColor: keypadBackgroundColor(context)),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           );
         } else {
           return ElevatedButton(
             onPressed: onBackspaceTap,
-            child: Icon(Icons.backspace, size: headingTextSize),
+            child: Icon(Icons.backspace, size: 24),
           );
         }
       },

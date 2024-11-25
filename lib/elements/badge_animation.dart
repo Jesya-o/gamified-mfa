@@ -76,13 +76,7 @@ class _BadgeAnimationState extends State<BadgeAnimation>
                 blendMode: BlendMode.srcATop,
                 child: Text(
                   widget.text,
-                  style: TextStyle(
-                    color: textColor(context),
-                    fontSize: badgeTextSize,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.none,
-                    fontFamily: GoogleFonts.figtree().fontFamily,
-                  ),
+                  style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
             ),

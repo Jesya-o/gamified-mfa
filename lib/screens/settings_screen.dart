@@ -73,7 +73,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               children: [
                 Text(
                   'Enable Gamification',
-                  style: TextStyle(fontSize: titleTextSize),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Switch(
                   value: _isGamificationEnabled,
@@ -94,11 +94,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   children: [
                     Text(
                       'Colorful Secret Code',
-                      style: TextStyle(
-                        fontSize: titleTextSize,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: isAvailable
                             ? null
-                            : optionNotAvailableColor,
+                            : optionNotAvailableColor
                       ),
                     ),
                     Switch(

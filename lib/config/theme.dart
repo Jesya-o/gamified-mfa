@@ -56,12 +56,6 @@ const Color bubbleColor0 = Color(0xFF5e4fa2); // #5e4fa2
 // Sizes
 const double edgeInsets = 16.0;
 
-const double titleTextSize = 18.0;
-const double headingTextSize = 24.0;
-const double regularTextSize = 16.0;
-const double smallTextSize = 14.0;
-const double badgeTextSize = 12.0;
-
 const double inputScreenTitleMT = 100.0;
 const double inputScreenTitleMB = 40.0;
 const double inputScreenCodeMB = 20.0;

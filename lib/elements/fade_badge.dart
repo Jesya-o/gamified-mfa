@@ -59,13 +59,7 @@ class _FadeBadgeState extends State<FadeBadge>
               ),
               child: Text(
                 widget.message,
-                style: TextStyle(
-                    color: textColor(context),
-                    fontSize: smallTextSize,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.none,
-                    fontFamily: GoogleFonts.figtree().fontFamily,
-                ),
+                style: Theme.of(context).textTheme.displayLarge,
               ),
             ),
           );

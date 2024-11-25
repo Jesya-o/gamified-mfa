@@ -1,20 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mfa_gamification/config/theme.dart';
 
 final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.blue,
+    fontFamily: GoogleFonts.figtree().fontFamily,
     appBarTheme: AppBarTheme(
       elevation: 0, // No separation
       titleTextStyle: TextStyle(
         color: Color(0xFF0F0E1B),
         fontSize: 20,
-        fontFamily: GoogleFonts.figtree().fontFamily,
       ),
     ),
     textTheme: TextTheme(
-      bodyMedium: TextStyle(color: Color(0xFF0F0E1B), fontFamily: GoogleFonts.figtree().fontFamily),
+      titleLarge: TextStyle(
+          fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF2A2A50)),
+      titleMedium: TextStyle(
+          fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF2A2A50)),
+      bodyLarge: TextStyle(fontSize: 18, color: Color(0xFF2A2A50)),
+      bodyMedium: TextStyle(fontSize: 16, color: Color(0xFF2A2A50)),
       bodySmall: TextStyle(color: Color(0xFF0F0E1B)),
+      labelLarge: TextStyle(fontSize: 16, color: Color(0xFFF2F2F8)),
+      labelMedium: TextStyle(fontSize: 14, color: Color(0xFFF2F2F8)),
+      displayLarge: TextStyle(
+          color: Color(0xFFF2F2F8),
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          decoration: TextDecoration.none),
+      displayMedium: TextStyle(
+          color: Color(0xFFF2F2F8),
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+          decoration: TextDecoration.none),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -22,9 +40,6 @@ final ThemeData lightTheme = ThemeData(
           textStyle: TextStyle(color: Color(0xFFF2F2F8))),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      focusColor: Colors.blue.shade50,
-      hoverColor: Colors.blue.shade100,
-      splashColor: Colors.blue,
       backgroundColor: Color(0xFF161528),
       foregroundColor: Color(0xFFF2F2F8),
     ));
@@ -53,9 +68,6 @@ final ThemeData darkTheme = ThemeData(
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      focusColor: Colors.blue,
-      hoverColor: Colors.blue,
-      splashColor: Colors.blue,
-      backgroundColor: Colors.blue,
-      foregroundColor: Colors.blue,
+      backgroundColor: Color(0xFF161528),
+      foregroundColor: Color(0xFFF2F2F8),
     ));

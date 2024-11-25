@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: _receiveRequest,
                   child: Text(
                     'Waiting for authentication requests...',
-                    style: TextStyle(fontSize: regularTextSize),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
               ],
