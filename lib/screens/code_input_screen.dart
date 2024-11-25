@@ -22,7 +22,6 @@ class CodeInputScreen extends StatefulWidget {
 }
 
 class _CodeInputScreenState extends State<CodeInputScreen> {
-  final _formKey = GlobalKey<FormState>();
   String _inputCode = '';
   bool _isGamificationEnabled = true;
   bool _isColorfulInput = false;
