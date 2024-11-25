@@ -163,10 +163,34 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                         ),
                       ),
                     SizedBox(height: defaultSpaceBtwElements),
-                    ElevatedButton(
-                      onPressed: _inputCode.isNotEmpty ? _submitCode : null,
-                      child: Text('Submit'),
-                    ),
+                    if (_isColorfulInput)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Spacer(),
+                          ElevatedButton(
+                            onPressed: _inputCode.isNotEmpty ? _submitCode : null,
+                            child: Text('Submit'),
+                          ),
+                          SizedBox(width: submitAndBackSpace),
+                          IconButton(
+                            icon: Icon(Icons.backspace),
+                            onPressed: () {
+                              setState(() {
+                                if (_inputCode.isNotEmpty) {
+                                  _inputCode = _inputCode.substring(0, _inputCode.length - 1);
+                                }
+                              });
+                            },
+                          ),
+                          SizedBox(width: backspaceMR),
+                        ],
+                      ),
+                    if (!_isColorfulInput)
+                      ElevatedButton(
+                        onPressed: _inputCode.isNotEmpty ? _submitCode : null,
+                        child: Text('Submit'),
+                      ),
                   ],
                 ),
               ),

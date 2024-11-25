@@ -37,6 +37,9 @@ const double keypadHeight = 380.0;
 const double defaultSpaceBtwElements = 20.0;
 const double colorBubbleSize = 60.0;
 
+const double submitAndBackSpace = 40;
+const double backspaceMR = 45;
+
 const double qrSize = 200.0;
 
 const double pointsMT = 10.0;
