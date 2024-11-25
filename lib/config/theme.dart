@@ -58,5 +58,5 @@ const double borderRadius = 15;
 const int shakeDelay = 500;
 const int shakeDuration = 400;
 const int addedPointsDuration = 4;
-const int successDuration = 4;
+const int successDuration = 5;
 
