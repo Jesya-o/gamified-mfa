@@ -145,18 +145,23 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                       ),
                     ),
                     SizedBox(height: inputScreenCodeMB),
-                    SizedBox(
-                      width: keypadWidth,
-                      height: keypadHeight,
-                      child: _isColorfulInput
-                          ? ColorKeypad(
-                              onColorTap: _onNumberTap,
-                            )
-                          : NumericKeypad(
-                              onNumberTap: _onNumberTap,
-                              onBackspaceTap: _onBackspaceTap,
-                            ),
-                    ),
+                    if (!_isColorfulInput)
+                      SizedBox(
+                        width: keypadWidth,
+                        height: keypadHeight,
+                        child: NumericKeypad(
+                          onNumberTap: _onNumberTap,
+                          onBackspaceTap: _onBackspaceTap,
+                        ),
+                      ),
+                    if (_isColorfulInput)
+                      SizedBox(
+                        width: colorKeypadWidth,
+                        height: keypadHeight,
+                        child: ColorKeypad(
+                          onColorTap: _onNumberTap,
+                        ),
+                      ),
                     SizedBox(height: defaultSpaceBtwElements),
                     ElevatedButton(
                       onPressed: _inputCode.isNotEmpty ? _submitCode : null,

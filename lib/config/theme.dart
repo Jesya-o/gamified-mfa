@@ -32,8 +32,10 @@ const double inputScreenCodeTextSize = 32.0;
 const double inputScreenCodeLetterSpacing = 2.0;
 
 const double keypadWidth = 280.0;
+const double colorKeypadWidth = 300.0;
 const double keypadHeight = 380.0;
 const double defaultSpaceBtwElements = 20.0;
+const double colorBubbleSize = 60.0;
 
 const double qrSize = 200.0;
 

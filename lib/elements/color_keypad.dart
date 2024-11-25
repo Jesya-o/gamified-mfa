@@ -1,4 +1,6 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:mfa_gamification/config/theme.dart';
 
 class ColorKeypad extends StatelessWidget {
   final Function(String) onColorTap;
@@ -20,18 +22,41 @@ class ColorKeypad extends StatelessWidget {
       Colors.brown,
     ];
 
-    return GridView.builder(
-      shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 5,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-      ),
-      itemCount: colors.length,
-      itemBuilder: (context, index) {
-        return GestureDetector(
+    final double bubbleSize = colorBubbleSize;
+
+    final random = Random();
+    final List<Offset> positions = [];
+
+    // Generate non-overlapping positions
+    Offset getRandomPosition() {
+      while (true) {
+        final double top = random.nextDouble() * (keypadHeight - bubbleSize);
+        final double left = random.nextDouble() * (colorKeypadWidth - bubbleSize);
+        final newPosition = Offset(left, top);
+
+        // Check for overlap
+        bool hasOverlap = positions.any((existingPosition) {
+          return (newPosition - existingPosition).distance < bubbleSize;
+        });
+
+        if (!hasOverlap) {
+          positions.add(newPosition);
+          return newPosition;
+        }
+      }
+    }
+
+    // Create bubbles
+    List<Widget> bubbles = List.generate(colors.length, (index) {
+      final position = getRandomPosition();
+      return Positioned(
+        top: position.dy,
+        left: position.dx,
+        child: GestureDetector(
           onTap: () => onColorTap((index + 1).toString()),
           child: Container(
+            width: bubbleSize,
+            height: bubbleSize,
             decoration: BoxDecoration(
               color: colors[index],
               shape: BoxShape.circle,
@@ -46,8 +71,12 @@ class ColorKeypad extends StatelessWidget {
               ),
             ),
           ),
-        );
-      },
+        ),
+      );
+    });
+
+    return Stack(
+      children: bubbles,
     );
   }
 }
