@@ -15,7 +15,7 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isGamificationEnabled = true;
-  bool _isColorfulInput = true;
+  bool _isColorfulInput = false;
 
   @override
   void initState() {

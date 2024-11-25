@@ -6,6 +6,7 @@ import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../elements/badge_animation.dart';
+import '../elements/color_keypad.dart';
 import '../elements/fade_badge.dart';
 import '../elements/gamification_manager.dart';
 import '../elements/numeric_keypad.dart';
@@ -24,6 +25,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
   final _formKey = GlobalKey<FormState>();
   String _inputCode = '';
   bool _isGamificationEnabled = true;
+  bool _isColorfulInput = false;
   bool _shouldShake = false;
 
   @override
@@ -36,6 +38,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _isGamificationEnabled = prefs.getBool(gamificationEnabledFlag) ?? true;
+      _isColorfulInput = prefs.getBool(colorfulInputFlag) ?? true;
     });
   }
 
@@ -145,10 +148,14 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                     SizedBox(
                       width: keypadWidth,
                       height: keypadHeight,
-                      child: NumericKeypad(
-                        onNumberTap: _onNumberTap,
-                        onBackspaceTap: _onBackspaceTap,
-                      ),
+                      child: _isColorfulInput
+                          ? ColorKeypad(
+                              onColorTap: _onNumberTap,
+                            )
+                          : NumericKeypad(
+                              onNumberTap: _onNumberTap,
+                              onBackspaceTap: _onBackspaceTap,
+                            ),
                     ),
                     SizedBox(height: defaultSpaceBtwElements),
                     ElevatedButton(
