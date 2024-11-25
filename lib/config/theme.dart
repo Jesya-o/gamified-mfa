@@ -8,13 +8,25 @@ const Color textColor = Colors.black;
 
 const Color successColor = Colors.lightGreen;
 
-const Color pointsBoxColor = Colors.indigo;
+const Color pointsBoxColor = Color(0xFF4E6E5D);
 const Color pointsColor = Colors.white;
 const Color messageColor = Colors.white;
 const Color pointsProgressLineColor = Colors.lightGreen;
 const Color pointsProgressLineBackgroundColor = Colors.white60;
 
 const Color optionNotAvailableColor = Colors.black26;
+
+// Bubble colors
+const Color bubbleColor1 = Color(0xFF9e0142); // #9e0142
+const Color bubbleColor2 = Color(0xFFd53e4f); // #d53e4f
+const Color bubbleColor3 = Color(0xFFf46d43); // #f46d43
+const Color bubbleColor4 = Color(0xFFfdae61); // #fdae61
+const Color bubbleColor5 = Color(0xFFfee08b); // #fee08b
+const Color bubbleColor6 = Color(0xFFe6f598); // #e6f598
+const Color bubbleColor7 = Color(0xFFabdda4); // #abdda4
+const Color bubbleColor8 = Color(0xFF66c2a5); // #66c2a5
+const Color bubbleColor9 = Color(0xFF3288bd); // #3288bd
+const Color bubbleColor0 = Color(0xFF5e4fa2); // #5e4fa2
 
 // Sizes
 const double edgeInsets = 16.0;

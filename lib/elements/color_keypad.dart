@@ -10,16 +10,16 @@ class ColorKeypad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = [
-      Colors.red,
-      Colors.orange,
-      Colors.yellow,
-      Colors.green,
-      Colors.blue,
-      Colors.indigo,
-      Colors.purple,
-      Colors.pink,
-      Colors.teal,
-      Colors.brown,
+      bubbleColor1,
+      bubbleColor2,
+      bubbleColor3,
+      bubbleColor4,
+      bubbleColor5,
+      bubbleColor6,
+      bubbleColor7,
+      bubbleColor8,
+      bubbleColor9,
+      bubbleColor0,
     ];
 
     final double bubbleSize = colorBubbleSize;
@@ -31,7 +31,8 @@ class ColorKeypad extends StatelessWidget {
     Offset getRandomPosition() {
       while (true) {
         final double top = random.nextDouble() * (keypadHeight - bubbleSize);
-        final double left = random.nextDouble() * (colorKeypadWidth - bubbleSize);
+        final double left =
+            random.nextDouble() * (colorKeypadWidth - bubbleSize);
         final newPosition = Offset(left, top);
 
         // Check for overlap
@@ -62,14 +63,14 @@ class ColorKeypad extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
-            child: Text(
-              (index + 1).toString(),
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-              ),
-            ),
+            // child: Text(
+            //   (index + 1).toString(),
+            //   style: TextStyle(
+            //     color: Colors.white,
+            //     fontWeight: FontWeight.bold,
+            //     fontSize: 18,
+            //   ),
+            // ),
           ),
         ),
       );
