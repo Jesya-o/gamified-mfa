@@ -106,6 +106,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
               },
             ),
+            Text('Available after 3 services are connected',
+                style: Theme.of(context).textTheme.bodySmall),
+            SizedBox(height: defaultSpaceBtwElements),
             Text('Number of connected services: $numberOfConnectedServices',
                 style: Theme.of(context).textTheme.bodyMedium),
             SizedBox(height: defaultSpaceBtwElements * 2),

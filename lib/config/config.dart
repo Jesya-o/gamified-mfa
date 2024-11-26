@@ -49,7 +49,7 @@ double pointsBadgeML(Size screen) {return screen.width / 2 + 70;}
 const double pointsBadgeOpacity = 0.9;
 const double borderRadius = 15;
 
-const int numberOfConnectedServices = 3;
+const int numberOfConnectedServices = 4;
 
 // Animations
 const int shakeDelay = 500;

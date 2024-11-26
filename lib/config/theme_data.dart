@@ -44,7 +44,7 @@ final ThemeData lightTheme = ThemeData(
         TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: lightBlue),
     bodyLarge: TextStyle(fontSize: 18, color: lightBlue),
     bodyMedium: TextStyle(fontSize: 16, color: lightBlue),
-    bodySmall: TextStyle(color: veryDarkBlue),
+    bodySmall: TextStyle(fontSize: 14, color: veryDarkBlue),
     labelLarge: TextStyle(fontSize: 16, color: snow),
     labelMedium: TextStyle(fontSize: 14, color: snow),
     displayLarge: TextStyle(
@@ -98,7 +98,7 @@ final ThemeData darkTheme = ThemeData(
   appBarTheme: AppBarTheme(
     elevation: 0, // No separation
     titleTextStyle: TextStyle(
-      color: maize,
+      color: snow,
       fontSize: 20,
       fontFamily: GoogleFonts.almendra().fontFamily,
     ),
@@ -111,7 +111,7 @@ final ThemeData darkTheme = ThemeData(
         TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: maize),
     bodyLarge: TextStyle(fontSize: 18, color: maize),
     bodyMedium: TextStyle(fontSize: 16, color: maize),
-    bodySmall: TextStyle(color: veryDarkBlue),
+    bodySmall: TextStyle(fontSize: 14, color: snow),
     labelLarge: TextStyle(fontSize: 16, color: snow),
     labelMedium: TextStyle(fontSize: 14, color: snow),
     displayLarge: TextStyle(
