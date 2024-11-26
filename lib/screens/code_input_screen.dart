@@ -175,7 +175,8 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                           ),
                           SizedBox(width: submitAndBackSpace),
                           IconButton(
-                            icon: Icon(Icons.backspace),
+                            icon: Icon(Icons.backspace,
+                                color: Theme.of(context).cardColor),
                             onPressed: () {
                               setState(() {
                                 if (_inputCode.isNotEmpty) {

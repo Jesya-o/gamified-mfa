@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Text('Authenticator'),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.settings, color: Theme.of(context).indicatorColor),
             onPressed: () {
               Navigator.push(
                 context,

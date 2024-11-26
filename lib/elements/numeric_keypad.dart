@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mfa_gamification/config/config.dart';
 
 class NumericKeypad extends StatelessWidget {
   final Function(String) onNumberTap;
@@ -43,7 +42,8 @@ class NumericKeypad extends StatelessWidget {
         } else {
           return ElevatedButton(
             onPressed: onBackspaceTap,
-            child: Icon(Icons.backspace, size: 24),
+            child: Icon(Icons.backspace,
+                size: 24, color: Theme.of(context).cardColor),
           );
         }
       },
