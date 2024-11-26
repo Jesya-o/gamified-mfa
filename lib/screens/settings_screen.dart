@@ -72,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Enable Gamification',
+                  'Enable gamification',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Switch(
@@ -81,6 +81,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
+            SizedBox(height: defaultSpaceBtwElements),
             FutureBuilder<bool>(
               future: _isColorfulInputAvailable(),
               builder: (context, snapshot) {
@@ -93,12 +94,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Colorful Secret Code',
+                      'Colorful secret code input',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: isAvailable
-                            ? null
-                            : optionNotAvailableColor
-                      ),
+                          color: isAvailable ? null : optionNotAvailableColor),
                     ),
                     Switch(
                       value: isAvailable ? _isColorfulInput : false,
@@ -108,23 +106,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
               },
             ),
+            Text('Number of connected services: $numberOfConnectedServices',
+                style: Theme.of(context).textTheme.bodyMedium),
+            SizedBox(height: defaultSpaceBtwElements * 2),
+            Text('Change App Style',
+                style: Theme.of(context).textTheme.titleMedium),
+            SizedBox(height: defaultSpaceBtwElements),
             ListTile(
-              title: Text('Light Theme'),
+              title: Text('Light Classics',
+                  style: Theme.of(context).textTheme.bodyLarge),
               trailing: Radio<bool>(
                 value: false,
                 groupValue: themeProvider.currentTheme == darkTheme,
                 onChanged: (value) {
-                  themeProvider.toggleTheme(false); // Switch to light theme
+                  themeProvider.toggleTheme(false);
                 },
               ),
             ),
             ListTile(
-              title: Text('Dark Theme'),
+              title: Text('Dark Sunset',
+                  style: Theme.of(context).textTheme.bodyLarge),
               trailing: Radio<bool>(
                 value: true,
                 groupValue: themeProvider.currentTheme == darkTheme,
                 onChanged: (value) {
-                  themeProvider.toggleTheme(true); // Switch to dark theme
+                  themeProvider.toggleTheme(true);
                 },
               ),
             ),

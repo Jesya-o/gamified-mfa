@@ -3,7 +3,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'config/config.dart';
 import 'config/theme_data.dart';
 import 'firebase_options.dart';
 import 'screens/home_screen.dart';
@@ -19,8 +21,21 @@ class ThemeProvider extends ChangeNotifier {
 
   ThemeData get currentTheme => _currentTheme;
 
-  void toggleTheme(bool isDarkMode) {
+  ThemeProvider() {
+    _loadTheme();
+  }
+
+  void toggleTheme(bool isDarkMode) async {
     _currentTheme = isDarkMode ? darkTheme : lightTheme;
+    notifyListeners();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(themePreferenceKey, isDarkMode);
+  }
+
+  Future<void> _loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDarkTheme = prefs.getBool(themePreferenceKey) ?? false;
+    _currentTheme = isDarkTheme ? darkTheme : lightTheme;
     notifyListeners();
   }
 }
