@@ -2,12 +2,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mfa_gamification/config/code.dart';
-import 'package:mfa_gamification/config/config.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../util/gamification_manager.dart';
 import '../elements/points_display.dart';
+import '../util/gamification_manager.dart';
 import 'add_service.dart';
 import 'verification_screen.dart';
 
@@ -76,7 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _navigateToVerificationScreen(RemoteMessage message) {
     final verificationCode = message.data[verificationCodeRequestParam] ?? '';
-    final requestDetail = message.data[requestDetailRequestParam] ?? 'Unknown request';
+    final requestDetail =
+        message.data[requestDetailRequestParam] ?? 'Unknown request';
 
     Navigator.push(
       context,
@@ -146,7 +146,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
                   final data = snapshot.data as List<int>;
-                  return PointsDisplay(points: data[0], level: data[1]);
+                  return PointsDisplay(
+                      points: data[0],
+                      level: data[1],
+                      isInTop10: data[1] > topTenLevel);
                 }
                 return SizedBox.shrink(); // Placeholder for loading
               },

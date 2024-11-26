@@ -208,7 +208,10 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                   if (snapshot.connectionState == ConnectionState.done &&
                       snapshot.hasData) {
                     final data = snapshot.data as List<int>;
-                    return PointsDisplay(points: data[0], level: data[1]);
+                    return PointsDisplay(
+                        points: data[0],
+                        level: data[1],
+                        isInTop10: data[1] > topTenLevel);
                   }
                   return SizedBox.shrink();
                 },

@@ -6,3 +6,5 @@ const String verificationCodeInManualRequest = '123456';
 
 const String verificationCodeRequestParam = 'verificationCode';
 const String requestDetailRequestParam = 'requestDetail';
+
+const int topTenLevel = 30;
