@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mfa_gamification/config/points.dart';
 import 'package:mfa_gamification/config/config.dart';
+import 'package:mfa_gamification/config/points.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/theme_data.dart';
-import '../util/gamification_manager.dart';
 import '../main.dart';
+import '../util/gamification_manager.dart';
 
 const String gamificationEnabledFlag = 'isGamificationEnabled';
 const String colorfulInputFlag = 'isColorfulInput';

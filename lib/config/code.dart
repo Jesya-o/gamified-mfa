@@ -1,4 +1,3 @@
-
 const int codeMaxLength = 12;
 
 const String secretCode = '1234';

@@ -45,7 +45,11 @@ const double progressLineHeight = 5;
 const double progressLineWidth = 100;
 
 const double pointsBadgeMT = 85;
-double pointsBadgeML(Size screen) {return screen.width / 2 + 70;}
+
+double pointsBadgeML(Size screen) {
+  return screen.width / 2 + 70;
+}
+
 const double pointsBadgeOpacity = 0.9;
 const double borderRadius = 15;
 
