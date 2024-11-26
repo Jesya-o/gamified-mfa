@@ -52,7 +52,7 @@ class _BadgeAnimationState extends State<BadgeAnimation>
       animation: _controller,
       builder: (context, child) {
         return Positioned(
-          top: pointsBadgeMT,
+          top: pointsBadgeMT - 10,
           left: pointsBadgeML(MediaQuery.of(context).size),
           child: Opacity(
             opacity: _opacityAnimation.value,
