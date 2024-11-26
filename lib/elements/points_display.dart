@@ -39,7 +39,7 @@ class PointsDisplay extends StatelessWidget {
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 Text(
-                  'Points: $points',
+                  'Points: $points / $levelUpPoints',
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
                 SizedBox(height: pointsEdgeInset),

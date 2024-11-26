@@ -38,6 +38,6 @@ const double borderRadius = 15;
 // Animations
 const int shakeDelay = 500;
 const int shakeDuration = 400;
-const int addedPointsDuration = 4;
+const int addedPointsDuration = 3;
 const int successDuration = 5;
 

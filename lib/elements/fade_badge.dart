@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mfa_gamification/config/config.dart';
 
 class FadeBadge extends StatefulWidget {
