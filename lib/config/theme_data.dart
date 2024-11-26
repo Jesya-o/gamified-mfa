@@ -38,10 +38,10 @@ final ThemeData lightTheme = ThemeData(
     ),
   ),
   textTheme: TextTheme(
-    titleLarge: TextStyle(
-        fontSize: 24, fontWeight: FontWeight.bold, color: lightBlue),
-    titleMedium: TextStyle(
-        fontSize: 18, fontWeight: FontWeight.bold, color: lightBlue),
+    titleLarge:
+        TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: lightBlue),
+    titleMedium:
+        TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: lightBlue),
     bodyLarge: TextStyle(fontSize: 18, color: lightBlue),
     bodyMedium: TextStyle(fontSize: 16, color: lightBlue),
     bodySmall: TextStyle(color: veryDarkBlue),
@@ -60,7 +60,9 @@ final ThemeData lightTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(color: snow)),
+      foregroundColor: darkestBlue,
+      backgroundColor: snow,
+    ),
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: darkestBlue,
@@ -103,10 +105,10 @@ final ThemeData darkTheme = ThemeData(
     backgroundColor: pennRed,
   ),
   textTheme: TextTheme(
-    titleLarge: TextStyle(
-        fontSize: 24, fontWeight: FontWeight.bold, color: snow),
-    titleMedium: TextStyle(
-        fontSize: 18, fontWeight: FontWeight.bold, color: maize),
+    titleLarge:
+        TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: snow),
+    titleMedium:
+        TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: maize),
     bodyLarge: TextStyle(fontSize: 18, color: maize),
     bodyMedium: TextStyle(fontSize: 16, color: maize),
     bodySmall: TextStyle(color: veryDarkBlue),
@@ -126,8 +128,8 @@ final ThemeData darkTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       foregroundColor: maize,
-        backgroundColor: oxfordBlue,
-        // textStyle: TextStyle(color: pennRed)
+      backgroundColor: oxfordBlue,
+      // textStyle: TextStyle(color: pennRed)
     ),
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(

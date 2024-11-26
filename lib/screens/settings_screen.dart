@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/theme_data.dart';
-import '../elements/gamification_manager.dart';
+import '../util/gamification_manager.dart';
 import '../main.dart';
 
 const String gamificationEnabledFlag = 'isGamificationEnabled';

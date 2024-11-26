@@ -1,11 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mfa_gamification/config/code.dart';
 import 'package:mfa_gamification/config/points.dart';
 import 'package:mfa_gamification/config/config.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/badge_animation.dart';
-import '../elements/gamification_manager.dart';
+import '../util/gamification_manager.dart';
 import '../elements/numeric_keypad.dart';
 import '../elements/points_display.dart';
 import '../elements/shake_animation.dart';
@@ -29,11 +32,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
   String _inputCode = '';
   bool _isGamificationEnabled = true;
   bool _shouldShake = false;
+  int _userLevel = 0;
 
   @override
   void initState() {
     super.initState();
+    _fetchUserLevel();
     _loadSettings();
+  }
+
+  Future<void> _fetchUserLevel() async {
+    final level = await GamificationManager.getLevel();
+    setState(() {
+      _userLevel = level;
+    });
   }
 
   Future<void> _loadSettings() async {
@@ -105,6 +117,92 @@ class _VerificationScreenState extends State<VerificationScreen> {
     }
   }
 
+  String generateRandomSixDigitCode() {
+    final random = Random();
+    final code = random.nextInt(900000) + 100000; // Ensures a 6-digit number
+    return code.toString();
+  }
+
+  Widget _buildVerificationWidget() {
+    if (_userLevel <= beginnerLevel) {
+      return Column(
+        children: [
+          ShakeAnimation(
+            shouldShake: _shouldShake,
+            child: Text(
+              _inputCode,
+              style: TextStyle(
+                fontSize: inputScreenCodeTextSize,
+                fontWeight: FontWeight.bold,
+                letterSpacing: inputScreenCodeLetterSpacing,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: keypadWidth,
+            height: keypadHeight,
+            child: NumericKeypad(
+              onNumberTap: _onNumberTap,
+              onBackspaceTap: _onBackspaceTap,
+            ),
+          ),
+          SizedBox(height: defaultSpaceBtwElements),
+          ElevatedButton(
+            onPressed: _inputCode.isNotEmpty ? _verifyCode : null,
+            child: Text('Verify'),
+          ),
+        ],
+      );
+    } else if (_userLevel <= masterLevel) {
+      final options = List<String>.from([
+        widget.verificationCode,
+        generateRandomSixDigitCode(),
+        generateRandomSixDigitCode(),
+        generateRandomSixDigitCode(),
+      ]..shuffle());
+
+      return Column(
+        children: options
+            .map((option) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: SizedBox(
+                    width: 300,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _inputCode = option;
+                        });
+                        _verifyCode();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        textStyle: TextStyle(
+                          fontSize: 16,
+                          fontFamily: GoogleFonts.figtree().fontFamily,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        foregroundColor: darkestBlue,
+                        backgroundColor: snow,
+                      ),
+                      child: Text(option),
+                    ),
+                  ),
+                ))
+            .toList(),
+      );
+    } else {
+      return ElevatedButton(
+        onPressed: () {
+          setState(() {
+            _inputCode = verificationCodeInManualRequest;
+          });
+          _verifyCode();
+        },
+        child: Text('Verify'),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,31 +222,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: inputScreenTitleMB),
-                    ShakeAnimation(
-                      shouldShake: _shouldShake,
-                      child: Text(
-                        _inputCode,
+                    if (_userLevel > masterLevel)
+                      Text(
+                        'Code: ${widget.verificationCode}',
                         style: TextStyle(
-                          fontSize: inputScreenCodeTextSize,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: inputScreenCodeLetterSpacing,
-                        ),
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                    ),
+                      SizedBox(height: defaultSpaceBtwElements),
+
                     SizedBox(height: inputScreenCodeMB),
-                    SizedBox(
-                      width: keypadWidth,
-                      height: keypadHeight,
-                      child: NumericKeypad(
-                        onNumberTap: _onNumberTap,
-                        onBackspaceTap: _onBackspaceTap,
-                      ),
-                    ),
-                    SizedBox(height: defaultSpaceBtwElements),
-                    ElevatedButton(
-                      onPressed: _inputCode.isNotEmpty ? _verifyCode : null,
-                      child: Text('Verify'),
-                    ),
+                    _buildVerificationWidget(),
                   ],
                 ),
               ),

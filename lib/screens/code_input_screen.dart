@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../elements/badge_animation.dart';
 import '../elements/color_keypad.dart';
 import '../elements/fade_badge.dart';
-import '../elements/gamification_manager.dart';
+import '../util/gamification_manager.dart';
 import '../elements/numeric_keypad.dart';
 import '../elements/points_display.dart';
 import '../elements/shake_animation.dart';

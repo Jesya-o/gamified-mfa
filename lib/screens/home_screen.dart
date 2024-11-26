@@ -6,7 +6,7 @@ import 'package:mfa_gamification/config/config.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../elements/gamification_manager.dart';
+import '../util/gamification_manager.dart';
 import '../elements/points_display.dart';
 import 'add_service.dart';
 import 'verification_screen.dart';
