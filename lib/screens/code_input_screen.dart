@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:mfa_gamification/config/code.dart';
-import 'package:mfa_gamification/config/points.dart';
 import 'package:mfa_gamification/config/config.dart';
+import 'package:mfa_gamification/config/points.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../elements/badge_animation.dart';
 import '../elements/color_keypad.dart';
 import '../elements/fade_badge.dart';
-import '../util/gamification_manager.dart';
 import '../elements/numeric_keypad.dart';
 import '../elements/points_display.dart';
 import '../elements/shake_animation.dart';
 import '../util/custom_colors.dart';
+import '../util/gamification_manager.dart';
 import 'home_screen.dart';
 
 class CodeInputScreen extends StatefulWidget {
