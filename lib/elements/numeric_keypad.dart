@@ -30,7 +30,7 @@ class NumericKeypad extends StatelessWidget {
             ),
           );
         } else if (index == 9) {
-          return SizedBox.shrink(); // Placeholder for empty space.
+          return SizedBox.shrink();
         } else if (index == 10) {
           return ElevatedButton(
             onPressed: () => onNumberTap('0'),

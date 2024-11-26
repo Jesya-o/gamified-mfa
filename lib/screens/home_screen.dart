@@ -151,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       level: data[1],
                       isInTop10: data[1] > topTenLevel);
                 }
-                return SizedBox.shrink(); // Placeholder for loading
+                return SizedBox.shrink();
               },
             ),
         ],
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           );
         },
-        child: Icon(Icons.qr_code), // QR code icon
+        child: Icon(Icons.qr_code),
       ),
     );
   }

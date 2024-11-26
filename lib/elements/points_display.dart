@@ -65,7 +65,7 @@ class PointsDisplay extends StatelessWidget {
           ),
         ),
       ),
-      if (isInTop10) // Conditionally show the badge
+      if (isInTop10)
         Positioned(
           top: pointsMT - 11,
           right: pointsMR + 25,

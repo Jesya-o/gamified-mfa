@@ -123,7 +123,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   String generateRandomSixDigitCode() {
     final random = Random();
-    final code = random.nextInt(900000) + 100000; // Ensures a 6-digit number
+    final code = random.nextInt(900000) + 100000;
     return code.toString();
   }
 
