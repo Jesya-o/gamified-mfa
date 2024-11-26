@@ -3,15 +3,16 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mfa_gamification/config/code.dart';
-import 'package:mfa_gamification/config/points.dart';
 import 'package:mfa_gamification/config/config.dart';
+import 'package:mfa_gamification/config/points.dart';
 import 'package:mfa_gamification/screens/settings_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../elements/badge_animation.dart';
-import '../util/gamification_manager.dart';
 import '../elements/numeric_keypad.dart';
 import '../elements/points_display.dart';
 import '../elements/shake_animation.dart';
+import '../util/gamification_manager.dart';
 import 'code_input_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -33,6 +34,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   bool _isGamificationEnabled = true;
   bool _shouldShake = false;
   int _userLevel = 0;
+  int _userPoints = 0;
 
   @override
   void initState() {
@@ -43,8 +45,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   Future<void> _fetchUserLevel() async {
     final level = await GamificationManager.getLevel();
+    final points = await GamificationManager.getPoints();
     setState(() {
       _userLevel = level;
+      _userPoints = points;
     });
   }
 
@@ -124,7 +128,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   }
 
   Widget _buildVerificationWidget() {
-    if (_userLevel <= beginnerLevel) {
+    if (_userLevel <= beginnerLevel || (_userPoints < 50 && _userPoints > 40)) {
       return Column(
         children: [
           ShakeAnimation(
@@ -138,6 +142,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
           ),
+          SizedBox(height: inputScreenCodeMB),
           SizedBox(
             width: keypadWidth,
             height: keypadHeight,
@@ -181,8 +186,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           fontFamily: GoogleFonts.figtree().fontFamily,
                           fontWeight: FontWeight.bold,
                         ),
-                        foregroundColor: darkestBlue,
-                        backgroundColor: snow,
+                        foregroundColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? snow
+                                : darkestBlue,
+                        backgroundColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? oxfordBlue.withOpacity(0.8)
+                                : snow,
                       ),
                       child: Text(option),
                     ),
@@ -191,15 +202,28 @@ class _VerificationScreenState extends State<VerificationScreen> {
             .toList(),
       );
     } else {
-      return ElevatedButton(
-        onPressed: () {
-          setState(() {
-            _inputCode = verificationCodeInManualRequest;
-          });
-          _verifyCode();
-        },
-        child: Text('Verify'),
-      );
+      return Column(children: [
+        SizedBox(height: 100),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              _inputCode = verificationCodeInManualRequest;
+            });
+            _verifyCode();
+          },
+          style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(
+              fontSize: 16,
+              fontFamily: GoogleFonts.figtree().fontFamily,
+              fontWeight: FontWeight.bold,
+            ),
+            foregroundColor: snow,
+            backgroundColor: darkestBlue,
+          ),
+          child: Text('Verify'),
+        ),
+        SizedBox(height: 200),
+      ]);
     }
   }
 
@@ -228,9 +252,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: defaultSpaceBtwElements),
-
-                    SizedBox(height: inputScreenCodeMB),
+                    SizedBox(height: defaultSpaceBtwElements),
                     _buildVerificationWidget(),
                   ],
                 ),
