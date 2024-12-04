@@ -241,7 +241,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   children: [
                     SizedBox(height: inputScreenTitleMT - (_isGamificationEnabled ? 0 : 30)),
                     Text(
-                      'Confirm the Request',
+                      'Verify the Request',
                       style: Theme.of(context).textTheme.titleMedium,
                       textAlign: TextAlign.center,
                     ),

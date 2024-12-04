@@ -128,7 +128,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                   children: [
                     SizedBox(height: inputScreenTitleMT),
                     Text(
-                      'Enter Secret Code',
+                      'Confirm with Your Secret Code',
                       style: Theme.of(context).textTheme.titleMedium,
                       textAlign: TextAlign.center,
                     ),
