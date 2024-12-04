@@ -53,13 +53,13 @@ double pointsBadgeML(Size screen) {
 const double pointsBadgeOpacity = 0.9;
 const double borderRadius = 15;
 
-const int numberOfConnectedServices = 4;
+// const int numberOfConnectedServices = 4;
 
 // Animations
 const int shakeDelay = 500;
 const int shakeDuration = 400;
 const int addedPointsDuration = 3;
-const int successDuration = 5;
+const int successDuration = 6;
 
 // Keys
 const String themePreferenceKey = 'isDarkTheme';

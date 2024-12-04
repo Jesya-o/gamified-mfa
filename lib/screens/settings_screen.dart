@@ -6,10 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../config/theme_data.dart';
 import '../main.dart';
-import '../util/gamification_manager.dart';
 
 const String gamificationEnabledFlag = 'isGamificationEnabled';
 const String colorfulInputFlag = 'isColorfulInput';
+const String numberOfConnectedServices = '_numberOfConnectedServices';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -19,6 +19,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _isGamificationEnabled = true;
   bool _isColorfulInput = false;
+  int _numberOfConnectedServices = 1;
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       _isGamificationEnabled = prefs.getBool(gamificationEnabledFlag) ?? true;
       _isColorfulInput = prefs.getBool(colorfulInputFlag) ?? true;
+      _numberOfConnectedServices = prefs.getInt(numberOfConnectedServices) ?? 1;
     });
   }
 
@@ -51,8 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<bool> _isColorfulInputAvailable() async {
-    int currentLevel = await GamificationManager.getLevel();
-    return currentLevel > colorfulInputAvailabilityLevel;
+    return _numberOfConnectedServices >= colorfulInputAvailabilityServicesnNumber;
   }
 
   @override
@@ -106,10 +107,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
               },
             ),
-            Text('Available after 3 services are connected',
+            Text('Available after $colorfulInputAvailabilityServicesnNumber services are connected',
                 style: Theme.of(context).textTheme.bodySmall),
             SizedBox(height: defaultSpaceBtwElements),
-            Text('Number of connected services: $numberOfConnectedServices',
+            Text('Number of connected services: $_numberOfConnectedServices',
                 style: Theme.of(context).textTheme.bodyMedium),
             SizedBox(height: defaultSpaceBtwElements * 2),
             Text('Change App Style',

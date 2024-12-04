@@ -40,11 +40,26 @@ class _FadeBadgeState extends State<FadeBadge>
     super.dispose();
   }
 
+  double _calculateLeftPosition(BuildContext context) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(
+        text: widget.message,
+        style: Theme.of(context).textTheme.displayLarge,
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    final double textWidth = textPainter.width;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
+    return (screenWidth - textWidth) / 2 - 20;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(
       top: MediaQuery.of(context).size.height * 0.3,
-      left: MediaQuery.of(context).size.width * 0.27,
+      left: _calculateLeftPosition(context),
       child: AnimatedBuilder(
         animation: _opacity,
         builder: (context, child) {
