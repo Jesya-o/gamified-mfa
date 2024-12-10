@@ -17,7 +17,7 @@ class AddServiceScreen extends StatefulWidget {
 }
 
 class _AddServiceScreenState extends State<AddServiceScreen> {
-  bool _isGamificationEnabled = true;
+  bool _isGamificationEnabled = false;
   int _numberOfServices = 1;
 
   @override
@@ -29,7 +29,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
   Future<void> _loadSettings() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _isGamificationEnabled = prefs.getBool(gamificationEnabledFlag) ?? true;
+      _isGamificationEnabled = prefs.getBool(gamificationEnabledFlag) ?? false;
     });
   }
 
@@ -43,10 +43,10 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
   Future<void> _proceed() async {
     if (_isGamificationEnabled) {
       String message = "Congrats! You protected one more service!";
-      if (_numberOfServices  == colorfulInputAvailabilityServicesnNumber) {
+      if (_numberOfServices  == colorfulInputAvailabilityServicesNumber) {
         message = "Yohhhoo! Colorful input is now unlocked!";
-      } else if (_numberOfServices < colorfulInputAvailabilityServicesnNumber) {
-        message += "\nAdd ${colorfulInputAvailabilityServicesnNumber - _numberOfServices} more services to unlock colorful input";
+      } else if (_numberOfServices < colorfulInputAvailabilityServicesNumber) {
+        message += "\nAdd ${colorfulInputAvailabilityServicesNumber - _numberOfServices} more services to unlock colorful input";
       }
       Overlay.of(context)?.insert(
         OverlayEntry(
