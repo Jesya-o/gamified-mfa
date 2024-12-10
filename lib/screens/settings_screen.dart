@@ -53,7 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<bool> _isColorfulInputAvailable() async {
-    return _numberOfConnectedServices >= colorfulInputAvailabilityServicesnNumber;
+    return _numberOfConnectedServices >= colorfulInputAvailabilityServicesNumber;
   }
 
   @override
@@ -107,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 );
               },
             ),
-            Text('Available after $colorfulInputAvailabilityServicesnNumber services are connected',
+            Text('Available after $colorfulInputAvailabilityServicesNumber services are connected',
                 style: Theme.of(context).textTheme.bodySmall),
             SizedBox(height: defaultSpaceBtwElements),
             Text('Number of connected services: $_numberOfConnectedServices',
