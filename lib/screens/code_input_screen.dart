@@ -26,6 +26,8 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
   String _inputCode = '';
   bool _isGamificationEnabled = true;
   bool _isColorfulInput = false;
+  bool _isColorfulInputEnabled = false;
+  int _numberOfConnectedServices = 1;
   bool _shouldShake = false;
 
   @override
@@ -39,6 +41,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
     setState(() {
       _isGamificationEnabled = prefs.getBool(gamificationEnabledFlag) ?? true;
       _isColorfulInput = prefs.getBool(colorfulInputFlag) ?? true;
+      _numberOfConnectedServices = prefs.getInt(numberOfConnectedServices) ?? 1;
     });
   }
 
@@ -145,7 +148,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                       ),
                     ),
                     SizedBox(height: inputScreenCodeMB),
-                    if (!_isColorfulInput)
+                    if (!_isColorfulInput || _numberOfConnectedServices < colorfulInputAvailabilityServicesNumber)
                       SizedBox(
                         width: keypadWidth,
                         height: keypadHeight,
@@ -154,7 +157,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                           onBackspaceTap: _onBackspaceTap,
                         ),
                       ),
-                    if (_isColorfulInput)
+                    if (_isColorfulInput && _numberOfConnectedServices >= colorfulInputAvailabilityServicesNumber)
                       SizedBox(
                         width: colorKeypadWidth,
                         height: keypadHeight,
@@ -163,7 +166,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                         ),
                       ),
                     SizedBox(height: defaultSpaceBtwElements),
-                    if (_isColorfulInput)
+                    if (_isColorfulInput && _numberOfConnectedServices >= colorfulInputAvailabilityServicesNumber)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -189,7 +192,7 @@ class _CodeInputScreenState extends State<CodeInputScreen> {
                           SizedBox(width: backspaceMR),
                         ],
                       ),
-                    if (!_isColorfulInput)
+                    if (!_isColorfulInput || _numberOfConnectedServices < colorfulInputAvailabilityServicesNumber)
                       ElevatedButton(
                         onPressed: _inputCode.isNotEmpty ? _submitCode : null,
                         child: Text('Submit'),
