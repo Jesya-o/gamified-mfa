@@ -240,19 +240,29 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(height: inputScreenTitleMT - (_isGamificationEnabled ? 0 : 30)),
-                    Text(
-                      'Verify the Request',
-                      style: Theme.of(context).textTheme.titleMedium,
-                      textAlign: TextAlign.center,
+                    Tooltip(
+                      message: 'Ensure the request details match before proceeding',
+                      textStyle: TextStyle(color: Colors.white),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'Verify the Request',
+                        style: Theme.of(context).textTheme.titleMedium,
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    SizedBox(height: inputScreenTitleMB),
+                    SizedBox(height: inputScreenTitleMB - 20),
                     if (_userLevel > masterLevel)
                       Text(
                         'Code: ${widget.verificationCode}',
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                    SizedBox(height: defaultSpaceBtwElements),
+                      SizedBox(height: defaultSpaceBtwElements / 3),
+                    if (_userLevel <= masterLevel)
+                      SizedBox(height: defaultSpaceBtwElements / 2),
                     _buildVerificationWidget(),
                   ],
                 ),
