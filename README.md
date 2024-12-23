@@ -101,8 +101,7 @@ MFA Gamification App is a Flutter-based mobile application that transforms the a
 ---
 
 ## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project is proprietary. All rights are reserved. For inquiries, contact [github.com/Jesya-o](https://github.com/Jesya-o).
 
 ---
 
